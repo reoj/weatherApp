@@ -1,0 +1,52 @@
+<mat-card *ngIf="weatherService.loading; else weatherContainer">
+  <mat-card-header><h2 class="loading">Loading...</h2></mat-card-header>
+</mat-card>
+
+<ng-template #weatherContainer>
+  <div *ngIf="weatherService.hasWeather" class="w-d-main">
+    <div class="grid">
+      <mat-card class="now grid-item">
+        <mat-card-header><h2>Current Weather</h2></mat-card-header>
+        <span class="material-symbols-outlined bigSymbol">
+          {{ iconNow }}
+        </span>
+
+        <mat-card-content
+          ><h1>{{ city }}, {{ country }}</h1>
+          <h2>{{ description }}</h2>
+          <h2>{{ currentTemp }}°C</h2>
+          <p>Feels like: {{ feelsLike }}°C</p>
+          <p class="shortData">
+            <span class="material-symbols-outlined">opacity</span>
+            {{ humidity }}%
+            <span class="material-symbols-outlined">air</span>
+            {{ windSpeed }} Km/h {{ windDirection }}
+            <span class="material-symbols-outlined">atm</span>
+            {{ pressure }} hPa
+          </p>
+          <p class="shortData">
+            <span>UV Index: {{ uvIndex }}</span>
+            <span>Visibility: {{ visibility }} km.</span>
+          </p>
+          <span>Weather Station: {{ station }}, {{ country }}</span>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="today grid-item">
+        <mat-card-content>
+          <h2>Today</h2>
+          <span class="material-symbols-outlined bigSymbol">
+            {{ iconToday }}
+          </span>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="tomorrow grid-item">
+        <mat-card-content>
+          <h2>Tomorrow</h2>
+          <span class="material-symbols-outlined bigSymbol">
+            {{ iconTomorrow }}
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</ng-template>
