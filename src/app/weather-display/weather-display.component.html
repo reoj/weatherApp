@@ -1,18 +1,24 @@
-<mat-card *ngIf="weatherService.loading; else weatherContainer">
-  <mat-card-header><h2 class="loading">Loading...</h2></mat-card-header>
+<mat-card *ngIf="weatherService.loading; else weatherContainer" > 
+  <!-- weatherService.loading -->
+  <mat-card-content class="loadingCard">
+    <mat-spinner diameter="30" color="accent"></mat-spinner>
+    <h2 class="loading">Loading...</h2>
+  </mat-card-content>
 </mat-card>
 
 <ng-template #weatherContainer>
   <div *ngIf="weatherService.hasWeather" class="w-d-main">
     <div class="grid">
       <mat-card class="now grid-item">
-        <mat-card-header><h2>Current Weather</h2></mat-card-header>
+        <mat-card-header>
+          <h2>Current Weather</h2>
+        </mat-card-header>
         <span class="material-symbols-outlined bigSymbol">
           {{ iconNow }}
         </span>
 
-        <mat-card-content
-          ><h1>{{ city }}, {{ country }}</h1>
+        <mat-card-content>
+          <h1>{{ city }}, {{ country }}</h1>
           <h2>{{ description }}</h2>
           <h2>{{ currentTemp }}°C</h2>
           <p>Feels like: {{ feelsLike }}°C</p>

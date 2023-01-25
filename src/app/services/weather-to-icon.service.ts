@@ -9,8 +9,12 @@ export class WeatherToIconService {
     this.matches = [
       { weather: 'Thunderstorm', icon: 'thunderstorm' },
       { weather: 'Drizzle', icon: 'grain' },
-      { weather: 'Rain', icon: 'rain' },
-      { weather: 'Snow', icon: 'weather_snowy' },
+      { weather: 'Rain', icon: 'rainy' },
+      { weather: 'Light rain shower', icon: 'rainy' },
+      { weather: 'Light rain', icon: 'grain' },
+      { weather: 'Light snow', icon: 'sunny_snowing' },
+      { weather: 'Snow', icon: 'ac_unit' },
+      { weather: 'Freezing fog', icon: 'ac_unit' },
       { weather: 'Mist', icon: 'sunny_snowing' },
       { weather: 'Smoke', icon: 'visibility_off' },
       { weather: 'Fog', icon: 'foggy' },
@@ -26,10 +30,17 @@ export class WeatherToIconService {
   }
   public getIcon(weatherInput: string): string {
     let icon = 'sunny';
-    let foundMatch = this.matches.find(
-      (match) => match.weather == weatherInput
-    );
-    if (foundMatch != undefined) {
+    var inputArray = weatherInput.toLowerCase().split(',');
+    let foundMatch = undefined;
+    let counter = 0;
+    while (foundMatch === undefined && counter < inputArray.length) {
+      let currentSearch = inputArray[counter].trim();
+      foundMatch = this.matches.find((match) => {        
+        return match.weather.toLowerCase() === currentSearch ? match : undefined;
+      });
+      counter++;
+    }
+    if (foundMatch !== undefined) {
       icon = foundMatch.icon;
     }
     return icon;
