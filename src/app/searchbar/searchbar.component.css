@@ -1,0 +1,11 @@
+form{
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+@media screen and (max-width:1000px){
+    form{
+        width: 100%;
+    }
+}
+

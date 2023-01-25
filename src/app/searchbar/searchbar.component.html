@@ -1,0 +1,22 @@
+<form>
+  <mat-form-field appearance="fill" color="accent">
+    <mat-label>City</mat-label>
+    <input
+      type="search"
+      matInput
+      [(ngModel)]="city"
+      placeholder="City"
+      name="txtCity"
+      (keyup.enter)="search()"
+    />
+    <button
+      matSuffix
+      mat-icon-button
+      aria-label="Search"
+      (click)="search()"
+      name="btnSearchCity"
+    >
+      <span class="material-symbols-outlined"> search </span>
+    </button>
+  </mat-form-field>
+</form>
