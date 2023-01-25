@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { waitForAsync } from '@angular/core/testing';
+import { Component, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  title = 'weatherApp';
-}
+export class AppComponent {}
