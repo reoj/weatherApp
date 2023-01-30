@@ -12,7 +12,7 @@ export class SnackbarcontrolService {
 
   openSnackBar(message: string, action: string) {
     let bar = this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
     bar.onAction().subscribe(() => {
       this.snackBar.dismiss();
