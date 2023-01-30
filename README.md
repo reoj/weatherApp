@@ -1,6 +1,6 @@
 # WeatherApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+This project was created as a learning tool of [Angular](https://github.com/angular/). It implements a very basic Weather Retrieval app
 
 ## Development server
 
