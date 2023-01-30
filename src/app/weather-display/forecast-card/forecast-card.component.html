@@ -1,0 +1,13 @@
+<mat-card [ngClass]='title.toLowerCase()'>
+  <mat-card-content>
+    <h2>{{ title }}</h2>
+    <div *ngIf="isHourly; else generalForecast" >
+
+    </div>
+    <ng-template #generalForecast>
+      <span class="material-symbols-outlined bigSymbol">
+        {{ icon }}
+      </span>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

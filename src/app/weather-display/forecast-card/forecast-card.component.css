@@ -1,0 +1,13 @@
+mat-card {
+  color: white;
+  height: 100%;
+}
+
+.today {
+  background-color: var(--md-sys-color-secondary-container);
+  grid-area: today;
+}
+.tomorrow {
+  background-color: var(--md-sys-color-tertiary-container);
+  grid-area: tomorrow;
+}
