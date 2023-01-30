@@ -1,4 +1,4 @@
-<mat-card *ngIf="weatherService.loading; else weatherContainer" > 
+<mat-card *ngIf="weatherService.loading; else weatherContainer">
   <!-- weatherService.loading -->
   <mat-card-content class="loadingCard">
     <mat-spinner diameter="30" color="accent"></mat-spinner>
@@ -37,22 +37,8 @@
           <span>Weather Station: {{ station }}, {{ country }}</span>
         </mat-card-content>
       </mat-card>
-      <mat-card class="today grid-item">
-        <mat-card-content>
-          <h2>Today</h2>
-          <span class="material-symbols-outlined bigSymbol">
-            {{ iconToday }}
-          </span>
-        </mat-card-content>
-      </mat-card>
-      <mat-card class="tomorrow grid-item">
-        <mat-card-content>
-          <h2>Tomorrow</h2>
-          <span class="material-symbols-outlined bigSymbol">
-            {{ iconTomorrow }}
-          </span>
-        </mat-card-content>
-      </mat-card>
+      <forecast-card title="Today"></forecast-card>
+      <forecast-card title="Tomorrow"></forecast-card>
     </div>
   </div>
 </ng-template>

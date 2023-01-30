@@ -30,6 +30,10 @@ export class WeatherService {
       },
       error: (err) => {
         var message = 'Error fetching weather data:' + err.message;
+        if (err.status == 404) {
+          message = 'City not found';
+        }
+          
         this.snackBar.openSnackBar(message, 'OK');
         this.loading = false;
         this.isReadyForUpdate = false;
