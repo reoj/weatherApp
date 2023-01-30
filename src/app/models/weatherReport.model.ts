@@ -21,7 +21,7 @@ export interface ServerResponse {
   weather: { [key: string]: Weather };
 }
 
-interface Weather {
+export interface Weather {
   hourly: [];
   maxtempC: string;
   mintempC: string;
