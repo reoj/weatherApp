@@ -12,7 +12,10 @@ export class WeatherService {
   public loading = false;
   public isReadyForUpdate = false;
 
-  constructor(public client: HttpClient, public snackBar: SnackbarcontrolService) {
+  constructor(
+    public client: HttpClient,
+    public snackBar: SnackbarcontrolService
+  ) {
     this.client = client;
   }
 
@@ -23,7 +26,7 @@ export class WeatherService {
   public async fetchWeather(city: string) {
     this.loading = true;
     this.isReadyForUpdate = false;
-    var url = `https://wttr.in/${city}?format=j2`;
+    var url = `https://wttr.in/${city}?format=j1`;
     this.client.get<ServerResponse>(url).subscribe({
       next: (data: ServerResponse) => {
         this.handleResponse(data);
@@ -33,7 +36,7 @@ export class WeatherService {
         if (err.status == 404) {
           message = 'City not found';
         }
-          
+
         this.snackBar.openSnackBar(message, 'OK');
         this.loading = false;
         this.isReadyForUpdate = false;
