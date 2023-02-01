@@ -1,3 +1,4 @@
+import { MatAutocomplete } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { WeatherDisplayModule } from './weather-display/weather-display.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +20,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [AppComponent, SearchbarComponent],
@@ -30,6 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
     FormsModule,    
     LayoutModule,
     MatInputModule, 
+    MatAutocompleteModule,
     MatFormFieldModule,
     MatButtonModule,
     MatSidenavModule,
