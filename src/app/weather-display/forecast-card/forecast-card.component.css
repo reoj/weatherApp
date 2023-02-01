@@ -49,6 +49,7 @@ mat-card-footer{
 }
 @media screen and (max-width: 1000px) {
   .grid-container {
+    margin-top: 0.5rem;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr;
   }
