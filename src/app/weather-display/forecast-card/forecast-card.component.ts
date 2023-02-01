@@ -41,10 +41,18 @@ export class ForecastCardComponent implements OnInit {
   }
 
   mapGeneralData (){
+    var dateISO = this.forecast.date;
     this.maxTemp = this.forecast.maxtempC;
     this.minTemp = this.forecast.mintempC;
     this.uvIndex = this.forecast.uvIndex;
-    this.date = this.forecast.date;
+    this.date = this.convertIsoDateToMx(dateISO);
+  }
+  convertIsoDateToMx(dateISO: string) {
+    var date = new Date(dateISO);
+    var day = date.getDate()
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   }
   convertMilitaryTimeToHours(militaryTime: string) {
     var military = parseInt(militaryTime);
