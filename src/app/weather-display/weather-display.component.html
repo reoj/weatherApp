@@ -1,8 +1,10 @@
-<mat-card *ngIf="weatherService.loading; else weatherContainer">
-  <!-- weatherService.loading -->
-  <mat-card-content class="loadingCard">
+<mat-card
+  *ngIf="weatherService.loading; else weatherContainer"
+  class="loadingCard"
+>
+  <mat-card-content>
     <mat-spinner diameter="30" color="accent"></mat-spinner>
-    <h2 class="loading">Loading...</h2>
+    <h2>Loading...</h2>
   </mat-card-content>
 </mat-card>
 
@@ -20,25 +22,39 @@
         <mat-card-content>
           <h1>{{ city }}, {{ country }}</h1>
           <h2>{{ description }}</h2>
-          <h2>{{ currentTemp }}°C</h2>
-          <p>Feels like: {{ feelsLike }}°C</p>
-          <p class="shortData">
-            <span class="material-symbols-outlined">opacity</span>
-            {{ humidity }}%
-            <span class="material-symbols-outlined">air</span>
-            {{ windSpeed }} Km/h {{ windDirection }}
-            <span class="material-symbols-outlined">atm</span>
-            {{ pressure }} hPa
-          </p>
+          <h2>{{ currentTemp }} °C</h2>
+          <p>Feels like: {{ feelsLike }} °C</p>
+          <div class="shortData">
+            <div>
+              <span class="material-symbols-outlined">opacity</span>
+              {{ humidity }}%
+            </div>
+
+            <div>
+              <span class="material-symbols-outlined">air</span>
+              {{ windSpeed }} Km/h {{ windDirection }}
+            </div>
+
+            <div>
+              <span class="material-symbols-outlined">atm</span>
+              {{ pressure }} hPa
+            </div>
+            <div>
+              <span class="material-symbols-outlined">water</span>
+              {{ precip }} mm.
+            </div>
+          </div>
           <p class="shortData">
             <span>UV Index: {{ uvIndex }}</span>
             <span>Visibility: {{ visibility }} km.</span>
           </p>
-          <span>Weather Station: {{ station }}, {{ country }}</span>
         </mat-card-content>
+        <mat-card-footer class="stationFooter">
+          <em>Weather Station: {{ station }}, {{ country }} </em>
+        </mat-card-footer>
       </mat-card>
-      <forecast-card title="Today"></forecast-card>
-      <forecast-card title="Tomorrow"></forecast-card>
+      <forecast-card title="Today" [forecast]="forecast[1]"></forecast-card>
+      <forecast-card title="Tomorrow" [forecast]="forecast[2]"></forecast-card>
     </div>
   </div>
 </ng-template>
