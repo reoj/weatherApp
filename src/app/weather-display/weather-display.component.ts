@@ -1,3 +1,4 @@
+import { Weather } from 'src/app/models/weatherReport.model';
 import { MatIconRegistry } from '@angular/material/icon';
 import { SnackbarcontrolService } from '../services/snackbarcontrol.service';
 import { ServerResponse } from './../models/weatherReport.model';
@@ -31,7 +32,8 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
   windSpeed = '0';
   maxTemp = '0';
   minTemp = '0';
-  hourlyWeather: any[] = [];
+  precip = '0';
+  forecast = [] as Weather[];
 
   constructor(
     public weatherService: WeatherService,
@@ -76,6 +78,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
     this.windSpeed = this.weatherData.current_condition[0].windspeedKmph;
     this.maxTemp = this.weatherData.weather[0].maxtempC;
     this.minTemp = this.weatherData.weather[0].mintempC;
-    this.hourlyWeather = this.weatherData.weather[0].hourly;
+    this.precip = this.weatherData.current_condition[0].precipMM;
+    this.forecast = this.weatherData.weather;
   }
 }
