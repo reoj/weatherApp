@@ -9,6 +9,7 @@ export interface ServerResponse {
     uvIndex: string;
     winddir16Point: string;
     windspeedKmph: string;
+    precipMM: string;
   }[];
   nearest_area: [
     {
@@ -18,11 +19,20 @@ export interface ServerResponse {
     }
   ];
   request: {};
-  weather: { [key: string]: Weather };
+  weather: [Weather];
 }
 
 export interface Weather {
-  hourly: [];
+  hourly: [
+    {
+      weatherDesc: [{ value: string }];
+      tempC: string;
+      time: string;
+    }
+  ];
   maxtempC: string;
   mintempC: string;
+  date: string;
+  avgtempC: string;
+  uvIndex: string;
 }
