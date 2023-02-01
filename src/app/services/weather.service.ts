@@ -26,7 +26,8 @@ export class WeatherService {
   public async fetchWeather(city: string) {
     this.loading = true;
     this.isReadyForUpdate = false;
-    var url = `https://wttr.in/${city}?format=j1`;
+    var encodedCity = city.replaceAll(' ', '+');
+    var url = `https://wttr.in/${encodedCity}?format=j1`;
     this.client.get<ServerResponse>(url).subscribe({
       next: (data: ServerResponse) => {
         this.handleResponse(data);
