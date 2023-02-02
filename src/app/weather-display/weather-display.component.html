@@ -1,7 +1,6 @@
 <mat-card
   *ngIf="weatherService.loading; else weatherContainer"
-  class="loadingCard"
->
+  class="loadingCard">
   <mat-card-content>
     <mat-spinner diameter="30" color="accent"></mat-spinner>
     <h2>Loading...</h2>
