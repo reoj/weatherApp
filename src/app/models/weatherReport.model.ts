@@ -1,16 +1,18 @@
-export interface ServerResponse {
+export interface SuccessfulServerResponse {
   current_condition: CurrentConditionData[];
   nearest_area: Area[];
   request: {};
   weather: [Weather];
 }
 
-export interface Area {
-  region: [{ value: string }];
-  country: [{ value: string }];
-  areaName: [{ value: string }];
+export interface ErrorServerResponse {
+  status: Number;
+  message: string;
+  name: string;
+  ok: boolean;
+  statusText: string;
+  url: string;
 }
-
 export interface CurrentConditionData {
   temp_C: string;
   FeelsLikeC: string;
@@ -22,6 +24,12 @@ export interface CurrentConditionData {
   windspeedKmph: string;
   precipMM: string;
   weatherDesc: [{ value: string }];
+}
+
+export interface Area {
+  region: [{ value: string }];
+  country: [{ value: string }];
+  areaName: [{ value: string }];
 }
 
 export interface Weather {
@@ -38,3 +46,4 @@ export interface Hourly {
   tempC: string;
   time: string;
 }
+
