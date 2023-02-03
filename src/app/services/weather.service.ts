@@ -1,66 +1,100 @@
+import { ErrorServerResponse } from './../models/weatherReport.model';
 import { SnackbarcontrolService } from './snackbarcontrol.service';
 import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ServerResponse } from '../models/weatherReport.model';
+import { SuccessfulServerResponse } from '../models/weatherReport.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherService {
-  public lastResult: ServerResponse = {} as ServerResponse;
+  public weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
+  
   public hasWeather = false;
   public loading = false;
   public isReadyForUpdate = false;
 
+  private baseURL = 'https://wttr.in/';
+  private options = '?format=j1';
+
   constructor(
-    public client: HttpClient,
+    public httpClient: HttpClient,
     public snackBar: SnackbarcontrolService
   ) {
-    this.client = client;
+    this.httpClient = httpClient;
   }
 
-  public getWeather(): ServerResponse {
-    return this.lastResult;
+  public getWeather(): SuccessfulServerResponse {
+    return this.weatherData;
   }
 
   public async fetchWeather(city: string) {
-    this.setLoadStatus(true);
-    this.isReadyForUpdate = false;
+    this.reloadService();
 
-    var encodedCity = city.replaceAll(' ', '+');
-    var url = `https://wttr.in/${encodedCity}?format=j1`;
+    var url = this.buildCityURL(city);
 
-    this.client.get<ServerResponse>(url).subscribe({
-      next: (data: ServerResponse) => {
+    const APIResponseObserver = {
+      next: (data: SuccessfulServerResponse) => {
         this.handleResponse(data);
       },
-      error: (err) => {
-        var message = 'Error fetching weather data:' + err.message;
-        if (err.status == 404) {
-          message = 'City not found';
-        }
-
-        this.snackBar.openSnackBar(message, 'OK');
-        this.setLoadStatus(false);
-        this.isReadyForUpdate = false;
+      error: (exception: ErrorServerResponse): void => {
+        var message = this.generateRelevantMessage(exception);
+        this.endWithError(message);
       },
-    });
+    };
+
+    this.httpClient
+      .get<SuccessfulServerResponse>(url)
+      .subscribe(APIResponseObserver);
   }
 
-  handleResponse(data: ServerResponse) {
-    if (data.weather == undefined) {
-      this.lastResult = {} as ServerResponse;
+  private reloadService() {
+    this.clear();
+    this.setLoadStatus(true);
+  }
+
+  private buildCityURL(city: string) {
+    var encodedCity = city.replaceAll(' ', '+');
+    var url = this.baseURL + `${encodedCity}` + this.options;
+    return url;
+  }
+
+  private generateRelevantMessage(exception: ErrorServerResponse): string {
+    var message = 'Error fetching weather data:' + exception.message;
+    if (exception.status == 404) {
+      message = 'City not found';
+    }
+    return message;
+  }
+
+  private endWithError(message: string) {
+    this.snackBar.openSnackBar(message, 'OK');
+    this.setLoadStatus(false);
+    this.isReadyForUpdate = false;
+  }
+
+  handleResponse(dataFromAPI: SuccessfulServerResponse) {
+    const dataFormatIsNotCorrect = this.checkDataHeaders(dataFromAPI);
+    if (dataFormatIsNotCorrect) {
+      this.weatherData = {} as SuccessfulServerResponse;
       return;
     }
-    //console.log(data);
-    this.lastResult = data;
+    this.updateServiceWith(dataFromAPI);
+  }
+
+  private checkDataHeaders(dataFromAPI: SuccessfulServerResponse) {
+    return dataFromAPI.weather == undefined || dataFromAPI.request == undefined;
+  }
+
+  private updateServiceWith(data: SuccessfulServerResponse) {
+    this.weatherData = data;
     this.checkForWeather();
     this.setLoadStatus(false);
     this.isReadyForUpdate = true;
   }
 
   public checkForWeather() {
-    this.hasWeather = this.lastResult.nearest_area != undefined;
+    this.hasWeather = this.weatherData.nearest_area != undefined;
   }
   public getWeatherAvailable() {
     return this.hasWeather;
@@ -75,7 +109,7 @@ export class WeatherService {
   }
 
   clear() {
-    this.lastResult = {} as ServerResponse;
+    this.weatherData = {} as SuccessfulServerResponse;
     this.hasWeather = false;
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
