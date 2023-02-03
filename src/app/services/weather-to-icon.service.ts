@@ -33,6 +33,7 @@ export class WeatherToIconService {
     var inputArray = weatherInput.toLowerCase().split(',');
     let foundMatch = undefined;
     let counter = 0;
+
     while (foundMatch === undefined && counter < inputArray.length) {
       let currentSearch = inputArray[counter].trim();
       foundMatch = this.matches.find((match) => {        
@@ -42,6 +43,21 @@ export class WeatherToIconService {
     }
     if (foundMatch !== undefined) {
       icon = foundMatch.icon;
+    }
+    return icon;
+  }
+  public makeIconNight(icon: string): string {
+    if (icon === 'sunny') {
+      return 'nightlight';
+    } 
+    if (icon === 'clear') {
+      return 'clear_night';
+    }
+    if (icon === 'partly_cloudy_day') {
+      return 'nights_stay';
+    }
+    if (icon === 'sunny_snowing') {
+      return 'snowing';
     }
     return icon;
   }
