@@ -24,10 +24,12 @@ export class WeatherService {
   }
 
   public async fetchWeather(city: string) {
-    this.loading = true;
+    this.setLoadStatus(true);
     this.isReadyForUpdate = false;
+
     var encodedCity = city.replaceAll(' ', '+');
     var url = `https://wttr.in/${encodedCity}?format=j1`;
+
     this.client.get<ServerResponse>(url).subscribe({
       next: (data: ServerResponse) => {
         this.handleResponse(data);
@@ -39,7 +41,7 @@ export class WeatherService {
         }
 
         this.snackBar.openSnackBar(message, 'OK');
-        this.loading = false;
+        this.setLoadStatus(false);
         this.isReadyForUpdate = false;
       },
     });
@@ -52,22 +54,30 @@ export class WeatherService {
     }
     //console.log(data);
     this.lastResult = data;
-    this.update();
-    this.loading = false;
+    this.checkForWeather();
+    this.setLoadStatus(false);
     this.isReadyForUpdate = true;
   }
 
-  public update() {
+  public checkForWeather() {
     this.hasWeather = this.lastResult.nearest_area != undefined;
   }
   public getWeatherAvailable() {
     return this.hasWeather;
   }
 
+  public getUpdateStatus() {
+    return this.isReadyForUpdate;
+  }
+
+  private setLoadStatus(status: boolean) {
+    this.loading = status;
+  }
+
   clear() {
     this.lastResult = {} as ServerResponse;
     this.hasWeather = false;
-    this.loading = false;
+    this.setLoadStatus(false);
     this.isReadyForUpdate = false;
   }
 }
