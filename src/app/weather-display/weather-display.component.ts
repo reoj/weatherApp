@@ -2,7 +2,7 @@ import { CurrentConditionUIModel } from './../models/ui.model';
 import { CurrentConditionData, Weather } from 'src/app/models/weatherReport.model';
 import { MatIconRegistry } from '@angular/material/icon';
 import { SnackbarcontrolService } from '../services/snackbarcontrol.service';
-import { ServerResponse, Area } from './../models/weatherReport.model';
+import { SuccessfulServerResponse, Area } from './../models/weatherReport.model';
 import { WeatherService } from './../services/weather.service';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { WeatherToIconService } from '../services/weather-to-icon.service';
@@ -15,7 +15,7 @@ import { WeatherToIconService } from '../services/weather-to-icon.service';
 export class WeatherDisplayComponent implements OnInit, DoCheck {
   isReadyForUpdate: boolean = false;
 
-  weatherData: ServerResponse = {} as ServerResponse;
+  weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
   conditionNow = new CurrentConditionUIModel();
   forecast = [] as Weather[];
 
@@ -26,7 +26,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
     private wtiService: WeatherToIconService
   ) {
     this.weatherService = weatherService;
-    this.isReadyForUpdate = this.weatherService.isReadyForUpdate;
+    this.isReadyForUpdate = this.weatherService.getUpdateStatus();
   }
 
   ngOnInit(): void {
@@ -37,21 +37,21 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
       this.updateDisplay();
     }
   }
-  private updateHasBeenCalled() {
-    return this.isReadyForUpdate != this.weatherService.isReadyForUpdate;
+  private updateHasBeenCalled(): boolean {
+    return this.isReadyForUpdate != this.weatherService.getUpdateStatus();
   }
 
-  updateDisplay() {
-    this.isReadyForUpdate = this.weatherService.isReadyForUpdate;
+  updateDisplay(): void {
+    this.isReadyForUpdate = this.weatherService.getUpdateStatus();
     this.weatherData = this.weatherService.getWeather();
-    if (this.weatherService.isReadyForUpdate) {
+    if (this.isReadyForUpdate) {
       this.mapData();
       var descriptionForIcon = this.conditionNow.description;
       this.conditionNow.icon = this.wtiService.getIcon(descriptionForIcon);
     }
   }
 
-  mapData() {
+  private mapData(): void {
     var recievedArea = this.weatherData.nearest_area[0];
     this.mapAreaData(recievedArea);
 
@@ -64,7 +64,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
     this.forecast = this.weatherData.weather;
   }
 
-  mapAreaData(recievedArea: Area) {
+  private mapAreaData(recievedArea: Area): void {
     var recievedCity = recievedArea.areaName[0].value;
     this.conditionNow.city = recievedCity;
 
@@ -75,7 +75,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
     this.conditionNow.country = recievedCountry;
   }
 
-  mapConditionData(recievedCondition: CurrentConditionData) {
+  private mapConditionData(recievedCondition: CurrentConditionData): void {
     this.conditionNow.currentTemp = recievedCondition.temp_C;
     this.conditionNow.feelsLike = recievedCondition.FeelsLikeC;
 
@@ -92,7 +92,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
     var recievedDescription = recievedCondition.weatherDesc[0].value;
     this.conditionNow.description = recievedDescription;
   }
-  mapWeatherData(recievedWeather: Weather) {
+  private mapWeatherData(recievedWeather: Weather): void {
     this.conditionNow.maxTemp = recievedWeather.maxtempC;
     this.conditionNow.minTemp = recievedWeather.mintempC;
   }

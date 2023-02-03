@@ -13,8 +13,8 @@ export class ForecastCardComponent implements OnInit {
   @Input() forecast: Weather = {} as Weather;
   @Input() title = 'Today';
 
-  cardData: ForecastCardUIModel = {} as ForecastCardUIModel;
-  hourlyModels: HourlyUIModel[] = [];
+  public cardData: ForecastCardUIModel = {} as ForecastCardUIModel;
+  public hourlyModels: HourlyUIModel[] = [];
 
   constructor(public iconService: WeatherToIconService) {}
 
@@ -32,7 +32,7 @@ export class ForecastCardComponent implements OnInit {
   private getHourlyForecasts(): [Hourly] {
     return this.forecast.hourly;
   }
-  private populateGridWithHours(hourlyForecasts: [Hourly]) {
+  private populateGridWithHours(hourlyForecasts: [Hourly]): void {
     for (let hour = 0; hour < hourlyForecasts.length; hour++) {
       this.generateHourlyUIModel(hourlyForecasts[hour]);
     }
