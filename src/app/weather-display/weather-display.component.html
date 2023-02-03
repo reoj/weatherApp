@@ -15,41 +15,41 @@
           <h2>Current Weather</h2>
         </mat-card-header>
         <span class="material-symbols-outlined bigSymbol">
-          {{ iconNow }}
+          {{ conditionNow.icon }}
         </span>
 
         <mat-card-content>
-          <h1>{{ city }}, {{ country }}</h1>
-          <h2>{{ description }}</h2>
-          <h2>{{ currentTemp }} °C</h2>
-          <p>Feels like: {{ feelsLike }} °C</p>
+          <h1>{{ conditionNow.city }}, {{ conditionNow.country }}</h1>
+          <h2>{{ conditionNow.description }}</h2>
+          <h2>{{ conditionNow.currentTemp }} °C</h2>
+          <p>Feels like: {{ conditionNow.feelsLike }} °C</p>
           <div class="shortData">
             <div>
               <span class="material-symbols-outlined">opacity</span>
-              {{ humidity }}%
+              {{ conditionNow.humidity }}%
             </div>
 
             <div>
               <span class="material-symbols-outlined">air</span>
-              {{ windSpeed }} Km/h {{ windDirection }}
+              {{ conditionNow.windSpeed }} Km/h {{ conditionNow.windDirection }}
             </div>
 
             <div>
               <span class="material-symbols-outlined">atm</span>
-              {{ pressure }} hPa
+              {{ conditionNow.pressure }} hPa
             </div>
             <div>
               <span class="material-symbols-outlined">water</span>
-              {{ precip }} mm.
+              {{ conditionNow.precipitationLevel }} mm.
             </div>
           </div>
           <p class="shortData">
-            <span>UV Index: {{ uvIndex }}</span>
-            <span>Visibility: {{ visibility }} km.</span>
+            <span>UV Index: {{ conditionNow.uvIndex }}</span>
+            <span>Visibility: {{ conditionNow.visibility }} km.</span>
           </p>
         </mat-card-content>
         <mat-card-footer class="stationFooter">
-          <em>Weather Station: {{ station }}, {{ country }} </em>
+          <em>Weather Station: {{ conditionNow.station }}, {{ conditionNow.country }} </em>
         </mat-card-footer>
       </mat-card>
       <forecast-card title="Today" [forecast]="forecast[1]"></forecast-card>
