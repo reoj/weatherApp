@@ -1,3 +1,5 @@
+import { Hourly } from './../../models/weatherReport.model';
+import { ForecastCardUIModel, HourlyUIModel } from './../../models/ui.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { Weather } from 'src/app/models/weatherReport.model';
 import { WeatherToIconService } from 'src/app/services/weather-to-icon.service';
@@ -8,59 +10,90 @@ import { WeatherToIconService } from 'src/app/services/weather-to-icon.service';
   styleUrls: ['./forecast-card.component.css'],
 })
 export class ForecastCardComponent implements OnInit {
-  constructor(public iconService: WeatherToIconService) {}
-  date = '';
-  uvIndex = '';
-  maxTemp: string = '';
-  minTemp: string = '';
-  hourlyModels: {
-    time: string;
-    description: string;
-    icon: string;
-    temperature: string;
-  }[] = [];
-
   @Input() forecast: Weather = {} as Weather;
   @Input() title = 'Today';
 
+  cardData: ForecastCardUIModel = {} as ForecastCardUIModel;
+  hourlyModels: HourlyUIModel[] = [];
+
+  constructor(public iconService: WeatherToIconService) {}
+
   ngOnInit(): void {
-    this.mapGeneralData();
-    var hours = this.forecast.hourly;
-    for (let i = 0; i < hours.length; i++) {
-      var description = hours[i].weatherDesc[0].value;
-      var hour = this.convertMilitaryTimeToHours(hours[i].time);
-      var foundIcon = this.iconService.getIcon(description);
-      var temperature = hours[i].tempC;
-      this.hourlyModels.push({
-        time: hour,
-        description: description,
-        icon: foundIcon,
-        temperature: temperature,
-      });
+    this.mapCardHeaderData();
+    var hourlyForecasts = this.getHourlyForecasts();
+    this.populateGridWithHours(hourlyForecasts);
+  }
+
+  private mapCardHeaderData(): void {
+    this.mapTemperatureData();
+    this.mapDateData();
+    this.cardData.uvIndex = this.forecast.uvIndex;
+  }
+  private getHourlyForecasts(): [Hourly] {
+    return this.forecast.hourly;
+  }
+  private populateGridWithHours(hourlyForecasts: [Hourly]) {
+    for (let hour = 0; hour < hourlyForecasts.length; hour++) {
+      this.generateHourlyUIModel(hourlyForecasts[hour]);
+    }
+    this.fixNightTimeIcon(1);
+  }
+  private generateHourlyUIModel(singleForecast: Hourly): void {
+    var hourlyUIData = this.generateHourlyData(singleForecast);
+    this.hourlyModels.push(hourlyUIData);
+  }
+
+  private generateHourlyData(singleHourForecast: Hourly): HourlyUIModel {
+    var temperatureFromAPI = singleHourForecast.tempC;
+    var descriptionFromAPI = singleHourForecast.weatherDesc[0].value;
+
+    var foundIcon = this.iconService.getIcon(descriptionFromAPI);
+
+    var hourFromAPI = singleHourForecast.time;
+    var readableHour = this.getLocalHoursFromMilitaryTime(hourFromAPI);
+
+    return new HourlyUIModel(
+      readableHour,
+      temperatureFromAPI,
+      descriptionFromAPI,
+      foundIcon
+    );
+  }
+
+  private fixNightTimeIcon(iconsToFix: number): void {
+    for (let iconLast = 0; iconLast < iconsToFix; iconLast++) {
+      var position = this.hourlyModels.length - (iconLast + 1);
+      var currentIcon = this.hourlyModels[position].icon;
+      this.hourlyModels[position].icon =
+        this.iconService.makeIconNight(currentIcon);
     }
   }
 
-  mapGeneralData (){
-    var dateISO = this.forecast.date;
-    this.maxTemp = this.forecast.maxtempC;
-    this.minTemp = this.forecast.mintempC;
-    this.uvIndex = this.forecast.uvIndex;
-    this.date = this.convertIsoDateToMx(dateISO);
+  private mapTemperatureData(): void {
+    this.cardData.maxTemp = this.forecast.maxtempC;
+    this.cardData.minTemp = this.forecast.mintempC;
   }
-  convertIsoDateToMx(dateISO: string) {
-    var date = new Date(dateISO);
-    var day = date.getDate()
+
+  private mapDateData(): void {
+    var dateISO = this.forecast.date;
+    this.cardData.date = this.convertIsoDateToLocalformat(dateISO);
+  }
+
+  private convertIsoDateToLocalformat(dateISO: string): string {
+    var readableDate = this.splitDate(new Date(dateISO));
+    return readableDate;
+  }
+
+  private splitDate(date: Date): string {
+    var day = date.getDate();
     var month = date.getMonth();
     var year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
-  convertMilitaryTimeToHours(militaryTime: string) {
+
+  private getLocalHoursFromMilitaryTime(militaryTime: string): string {
     var military = parseInt(militaryTime);
     var hours = Math.floor(military / 100);
     return '' + hours;
-  }
-
-  displayResult() {
-    throw new Error('Function not implemented.');
   }
 }

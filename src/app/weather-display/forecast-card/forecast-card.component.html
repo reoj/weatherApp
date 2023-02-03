@@ -3,21 +3,21 @@
     <mat-card-title>
       <h2>{{ title }}</h2>
     </mat-card-title>
-    <mat-card-subtitle> {{ date }}</mat-card-subtitle>
+    <mat-card-subtitle> {{ cardData.date }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <div class="data-strip">
       <div>
         <span class="material-symbols-outlined"> arrow_upward </span>
-        <span class="temperature"> {{ maxTemp }} °C</span>
+        <span class="temperature"> {{ cardData.maxTemp }} °C</span>
       </div>
 
       <div>
         <span class="material-symbols-outlined"> arrow_downward </span>
-        <span class="temperature"> {{ minTemp }} °C</span>
+        <span class="temperature"> {{ cardData.minTemp }} °C</span>
       </div>
-      <div>UV Index: {{ uvIndex }}</div>
+      <div>UV Index: {{ cardData.uvIndex }}</div>
     </div>
   </mat-card-content>
   <mat-card-footer>
