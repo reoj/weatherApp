@@ -18,44 +18,46 @@ export class SearchbarComponent implements OnInit {
   searchBar = new FormControl('');
 
   constructor(
-    public iconRegistery: MatIconRegistry,
-    public weatherService: WeatherService,
+    public WeatherService: WeatherService,
     public SnackbarService: SnackbarcontrolService,
-    public autocomplete: AutocompleteService
+    public Autocomplete: AutocompleteService
   ) {
-    this.weatherService = weatherService;
+    this.WeatherService = WeatherService;
     this.filteredSuggestions = new Observable<string[]>();
-    this.autocomplete = autocomplete;
+    this.Autocomplete = Autocomplete;
   }
 
   ngOnInit(): void {
-    this.listOfSuggestions = this.autocomplete.citiesList;
+    this.listOfSuggestions = this.Autocomplete.citiesList;
     this.filteredSuggestions = this.searchBar.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value || '')),
+      map((value) => this._filter(value || ''))
     );
   }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.listOfSuggestions.filter((option) =>
       option.toLowerCase().includes(filterValue)
     );
   }
-  search() {
-    this.weatherService.clear();
+
+  public search(): void {
+    this.WeatherService.clear();
     this.city = this.searchBar.value || '';
-    if (this.city == '') {
-      this.SnackbarService.openSnackBar('Error: Please enter a city', 'OK');
-      return;
-    }
+    var errorMessage = '';
     if (this.city.length < 3) {
-      this.SnackbarService.openSnackBar(
-        'Error: The search term must be at least 3 characters long',
-        'OK'
-      );
+      errorMessage = 'Error: Please enter a city with at least 3 characters';
+    }
+    if (this.city == '') {
+      errorMessage = 'Error: Please enter a city';
+    }
+
+    if (errorMessage != '') {
+      this.SnackbarService.openSnackBar(errorMessage, 'OK');
       return;
     }
-    var URIencodedCity = this.autocomplete.prepareCityString(this.city);
-    this.weatherService.fetchWeather(URIencodedCity);
+    var URIencodedCity = this.Autocomplete.prepareCityString(this.city);
+    this.WeatherService.fetchWeather(URIencodedCity);
   }
 }
