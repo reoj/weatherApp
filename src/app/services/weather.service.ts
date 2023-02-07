@@ -3,13 +3,14 @@ import { SnackbarcontrolService } from './snackbarcontrol.service';
 import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SuccessfulServerResponse } from '../models/weatherReport.model';
+import { retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherService {
   public weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
-  
+
   public hasWeather = false;
   public loading = false;
   public isReadyForUpdate = false;
@@ -34,7 +35,7 @@ export class WeatherService {
     var url = this.buildCityURL(city);
 
     const APIResponseObserver = {
-      next: (data: SuccessfulServerResponse) => {
+      next: (data: SuccessfulServerResponse): void => {
         this.handleResponse(data);
       },
       error: (exception: ErrorServerResponse): void => {
@@ -45,6 +46,7 @@ export class WeatherService {
 
     this.httpClient
       .get<SuccessfulServerResponse>(url)
+      .pipe(retry(3))
       .subscribe(APIResponseObserver);
   }
 
