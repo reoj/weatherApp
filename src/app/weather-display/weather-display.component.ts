@@ -1,8 +1,14 @@
 import { CurrentConditionUIModel } from './../models/ui.model';
-import { CurrentConditionData, Weather } from 'src/app/models/weatherReport.model';
+import {
+  CurrentConditionData,
+  Weather,
+} from 'src/app/models/weatherReport.model';
 import { MatIconRegistry } from '@angular/material/icon';
 import { SnackbarcontrolService } from '../services/snackbarcontrol.service';
-import { SuccessfulServerResponse, Area } from './../models/weatherReport.model';
+import {
+  SuccessfulServerResponse,
+  Area,
+} from './../models/weatherReport.model';
 import { WeatherService } from './../services/weather.service';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { WeatherToIconService } from '../services/weather-to-icon.service';
@@ -20,34 +26,32 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
   forecast = [] as Weather[];
 
   constructor(
-    public weatherService: WeatherService,
-    public snackbarService: SnackbarcontrolService,
-    public iconRegistery: MatIconRegistry,
-    private wtiService: WeatherToIconService
+    public WeatherService: WeatherService,
+    private WTIService: WeatherToIconService
   ) {
-    this.weatherService = weatherService;
-    this.isReadyForUpdate = this.weatherService.getUpdateStatus();
+    this.WeatherService = WeatherService;
+    this.isReadyForUpdate = this.WeatherService.getUpdateStatus();
   }
 
   ngOnInit(): void {
     this.updateDisplay();
   }
   ngDoCheck(): void {
-    if (this.updateHasBeenCalled()) {      
+    if (this.updateHasBeenCalled()) {
       this.updateDisplay();
     }
   }
   private updateHasBeenCalled(): boolean {
-    return this.isReadyForUpdate != this.weatherService.getUpdateStatus();
+    return this.isReadyForUpdate != this.WeatherService.getUpdateStatus();
   }
 
   updateDisplay(): void {
-    this.isReadyForUpdate = this.weatherService.getUpdateStatus();
-    this.weatherData = this.weatherService.getWeather();
+    this.isReadyForUpdate = this.WeatherService.getUpdateStatus();
+    this.weatherData = this.WeatherService.getWeather();
     if (this.isReadyForUpdate) {
       this.mapData();
       var descriptionForIcon = this.conditionNow.description;
-      this.conditionNow.icon = this.wtiService.getIcon(descriptionForIcon);
+      this.conditionNow.icon = this.WTIService.getIcon(descriptionForIcon);
     }
   }
 
@@ -70,7 +74,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
 
     var recievedStation = recievedArea.region[0].value;
     this.conditionNow.station = recievedStation;
-    
+
     var recievedCountry = recievedArea.country[0].value;
     this.conditionNow.country = recievedCountry;
   }
@@ -81,7 +85,7 @@ export class WeatherDisplayComponent implements OnInit, DoCheck {
 
     this.conditionNow.humidity = recievedCondition.humidity;
     this.conditionNow.pressure = recievedCondition.pressure;
-    
+
     this.conditionNow.windDirection = recievedCondition.winddir16Point;
     this.conditionNow.windSpeed = recievedCondition.windspeedKmph;
 
