@@ -29,10 +29,10 @@ export class WeatherToIconService {
     ];
   }
   public getIcon(weatherInput: string): string {
-    let icon = 'sunny';
+    var icon = 'sunny';
     var inputArray = weatherInput.toLowerCase().split(',');
-    let foundMatch = undefined;
-    let counter = 0;
+    var foundMatch = undefined;
+    var counter = 0;
 
     while (foundMatch === undefined && counter < inputArray.length) {
       let currentSearch = inputArray[counter].trim();
