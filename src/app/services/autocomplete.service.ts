@@ -32,6 +32,8 @@ export class AutocompleteService {
     'Miami, Florida',
     'Luxembourg, Luxembourg',
     'Las Vegas, Nevada',
+    'Guffey, Colorado',
+    'Columbine, Colorado',
     'San Diego, California',
     'Dallas, Texas',
     'Capetown, South Africa',
@@ -42,6 +44,7 @@ export class AutocompleteService {
     'Kyoto, Japan',
     'Moscow, Russia',
     'Saint Petersburg, Russia',
+    'Orlando, Florida',
     'Kiev, Ukraine',
     'Minsk, Belarus',
     'Beijing, China',
@@ -60,7 +63,13 @@ export class AutocompleteService {
     'Caracas, Venezuela',
     'Santiago, Chile',
     'Lisbon, Portugal',
-  ];
+    'Amsterdam, Netherlands',
+    'Athens, Greece',
+    'Copenhagen, Denmark',
+    'Quito, Ecuador',
+    'Havana, Cuba',
+    'Quebec City, Quebec',
+  ].sort();
   constructor() {}
 
   public prepareCityString(city: string) {
