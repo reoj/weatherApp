@@ -75,21 +75,9 @@ export class ForecastCardComponent implements OnInit {
   }
 
   private mapDateData(): void {
-    var dateISO = this.forecast.date;
-    this.cardData.date = this.convertIsoDateToLocalformat(dateISO);
+    this.cardData.date = this.forecast.date;
   }
 
-  private convertIsoDateToLocalformat(dateISO: string): string {
-    var readableDate = this.splitDate(new Date(dateISO));
-    return readableDate;
-  }
-
-  private splitDate(date: Date): string {
-    var day = date.getDate();
-    var month = date.getMonth();
-    var year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  }
 
   private getLocalHoursFromMilitaryTime(militaryTime: string): string {
     var military = parseInt(militaryTime);
