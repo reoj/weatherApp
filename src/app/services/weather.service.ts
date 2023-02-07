@@ -3,7 +3,7 @@ import { SnackbarcontrolService } from './snackbarcontrol.service';
 import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SuccessfulServerResponse } from '../models/weatherReport.model';
-import { retry } from 'rxjs';
+import { Subscription, retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,8 @@ export class WeatherService {
 
   private baseURL = 'https://wttr.in/';
   private options = '?format=j1';
+
+  private weatherSubscription: Subscription = new Subscription();
 
   constructor(
     public httpClient: HttpClient,
@@ -44,7 +46,7 @@ export class WeatherService {
       },
     };
 
-    this.httpClient
+    this.weatherSubscription = this.httpClient
       .get<SuccessfulServerResponse>(url)
       .pipe(retry(3))
       .subscribe(APIResponseObserver);
@@ -73,6 +75,7 @@ export class WeatherService {
     this.snackBar.openSnackBar(message, 'OK');
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
+    this.weatherSubscription.unsubscribe();
   }
 
   handleResponse(dataFromAPI: SuccessfulServerResponse) {
@@ -115,5 +118,6 @@ export class WeatherService {
     this.hasWeather = false;
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
+    this.weatherSubscription.unsubscribe();
   }
 }
