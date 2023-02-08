@@ -13,7 +13,7 @@ import { FormControl } from '@angular/forms';
 })
 export class SearchbarComponent implements OnInit {
   city = '';
-  listOfSuggestions = ['Queretaro'];
+  listOfSuggestions = ['Queretaro, Queretaro'];
   filteredSuggestions: Observable<string[]>;
   searchBar = new FormControl('');
 
@@ -45,6 +45,20 @@ export class SearchbarComponent implements OnInit {
   public search(): void {
     this.WeatherService.clear();
     this.city = this.searchBar.value || '';
+
+    var errorMessage = this.checkCityValueForErrors();
+    var anErrorWasFound = errorMessage != ''
+
+    if (anErrorWasFound) {
+      this.SnackbarService.openSnackBar(errorMessage, 'OK');
+      return;
+    }
+
+    var URIencodedCity = this.Autocomplete.prepareCityString(this.city);
+    this.WeatherService.fetchWeather(URIencodedCity);
+  }
+
+  private checkCityValueForErrors() {
     var errorMessage = '';
     if (this.city.length < 3) {
       errorMessage = 'Error: Please enter a city with at least 3 characters';
@@ -52,12 +66,10 @@ export class SearchbarComponent implements OnInit {
     if (this.city == '') {
       errorMessage = 'Error: Please enter a city';
     }
+    return errorMessage;
+  }
 
-    if (errorMessage != '') {
-      this.SnackbarService.openSnackBar(errorMessage, 'OK');
-      return;
-    }
-    var URIencodedCity = this.Autocomplete.prepareCityString(this.city);
-    this.WeatherService.fetchWeather(URIencodedCity);
+  public setDisplayValue(recieved: string) {
+    this.searchBar.setValue(recieved);
   }
 }
