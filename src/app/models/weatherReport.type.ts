@@ -39,6 +39,7 @@ export interface Weather {
   date: string;
   avgtempC: string;
   uvIndex: string;
+  astronomy: Astronomy[];
 }
 
 export interface Hourly {
@@ -47,3 +48,11 @@ export interface Hourly {
   time: string;
 }
 
+export class Astronomy {
+  moonrise: string = '00:00';
+  moonset: string = '00:00';
+  moon_phase: string = 'Phase';
+  moon_illumination: string = '0';
+  sunrise: string = '00:00';
+  sunset: string = '00:00';
+}
