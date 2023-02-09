@@ -4,9 +4,10 @@ import { WeatherDisplayComponent } from './weather-display.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForecastCardComponent } from './forecast-card/forecast-card.component';
+import { CurrentConditionCardComponent } from './current-condition-card/current-condition-card.component';
 
 @NgModule({
-  declarations: [WeatherDisplayComponent, ForecastCardComponent],
+  declarations: [WeatherDisplayComponent, ForecastCardComponent, CurrentConditionCardComponent],
   exports: [WeatherDisplayComponent],
   imports: [
     MatCardModule,

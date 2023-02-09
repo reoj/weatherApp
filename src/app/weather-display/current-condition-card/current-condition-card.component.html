@@ -1,0 +1,42 @@
+<mat-card>
+    <mat-card-header>
+      <h2>Current Weather</h2>
+    </mat-card-header>
+    <span class="material-symbols-outlined bigSymbol">
+      {{ condition.icon }}
+    </span>
+
+    <mat-card-content>
+      <h1>{{ condition.city }}, {{ condition.country }}</h1>
+      <h2>{{ condition.description }}</h2>
+      <h2>{{ condition.currentTemp }} °C</h2>
+      <p>Feels like: {{ condition.feelsLike }} °C</p>
+      <div class="shortData">
+        <div>
+          <span class="material-symbols-outlined">opacity</span>
+          {{ condition.humidity }} %
+        </div>
+
+        <div>
+          <span class="material-symbols-outlined">air</span>
+          {{ condition.windSpeed }} km/h {{ condition.windDirection }}
+        </div>
+
+        <div>
+          <span class="material-symbols-outlined">atm</span>
+          {{ condition.pressure }} hPa
+        </div>
+        <div>
+          <span class="material-symbols-outlined">water</span>
+          {{ condition.precipitationLevel }} mm.
+        </div>
+      </div>
+      <p class="shortData">
+        <span>UV Index: {{ condition.uvIndex }}</span>
+        <span>Visibility: {{ condition.visibility }} km.</span>
+      </p>
+    </mat-card-content>
+    <mat-card-footer class="stationFooter">
+      <em>Weather Station: {{ condition.station }}, {{ condition.country }} </em>
+    </mat-card-footer>
+  </mat-card>

@@ -1,14 +1,14 @@
-import { CurrentConditionUIModel } from './../models/ui.model';
+import { CurrentConditionUIModel } from '../models/ui.type';
 import {
   CurrentConditionData,
   Weather,
-} from 'src/app/models/weatherReport.model';
+} from 'src/app/models/weatherReport.type';
 import { MatIconRegistry } from '@angular/material/icon';
 import { SnackbarcontrolService } from '../services/snackbarcontrol.service';
 import {
   SuccessfulServerResponse,
   Area,
-} from './../models/weatherReport.model';
+} from '../models/weatherReport.type';
 import { WeatherService } from './../services/weather.service';
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { WeatherToIconService } from '../services/weather-to-icon.service';

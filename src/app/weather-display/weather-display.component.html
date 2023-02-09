@@ -9,49 +9,8 @@
 
 <ng-template #weatherContainer>
   <div *ngIf="WeatherService.hasWeather" class="w-d-main">
-    <div class="grid">
-      <mat-card class="now grid-item">
-        <mat-card-header>
-          <h2>Current Weather</h2>
-        </mat-card-header>
-        <span class="material-symbols-outlined bigSymbol">
-          {{ conditionNow.icon }}
-        </span>
-
-        <mat-card-content>
-          <h1>{{ conditionNow.city }}, {{ conditionNow.country }}</h1>
-          <h2>{{ conditionNow.description }}</h2>
-          <h2>{{ conditionNow.currentTemp }} °C</h2>
-          <p>Feels like: {{ conditionNow.feelsLike }} °C</p>
-          <div class="shortData">
-            <div>
-              <span class="material-symbols-outlined">opacity</span>
-              {{ conditionNow.humidity }} %
-            </div>
-
-            <div>
-              <span class="material-symbols-outlined">air</span>
-              {{ conditionNow.windSpeed }} km/h {{ conditionNow.windDirection }}
-            </div>
-
-            <div>
-              <span class="material-symbols-outlined">atm</span>
-              {{ conditionNow.pressure }} hPa
-            </div>
-            <div>
-              <span class="material-symbols-outlined">water</span>
-              {{ conditionNow.precipitationLevel }} mm.
-            </div>
-          </div>
-          <p class="shortData">
-            <span>UV Index: {{ conditionNow.uvIndex }}</span>
-            <span>Visibility: {{ conditionNow.visibility }} km.</span>
-          </p>
-        </mat-card-content>
-        <mat-card-footer class="stationFooter">
-          <em>Weather Station: {{ conditionNow.station }}, {{ conditionNow.country }} </em>
-        </mat-card-footer>
-      </mat-card>
+    <div class="main-weather">
+      <current-condition-card [condition]="conditionNow" class="now"></current-condition-card>
       <forecast-card title="Today" [forecast]="forecast[0]"></forecast-card>
       <forecast-card title="Tomorrow" [forecast]="forecast[1]"></forecast-card>
     </div>
