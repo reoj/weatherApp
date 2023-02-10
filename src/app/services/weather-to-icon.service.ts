@@ -13,6 +13,7 @@ export class WeatherToIconService {
       { weather: 'Light rain shower', icon: 'rainy' },
       { weather: 'Light rain', icon: 'grain' },
       { weather: 'Light snow', icon: 'cloudy_snowing' },
+      { weather: 'Heavy snow', icon: 'ac_unit' },
       { weather: 'Snow', icon: 'ac_unit' },
       { weather: 'Freezing fog', icon: 'ac_unit' },
       { weather: 'Mist', icon: 'sunny_snowing' },
@@ -23,13 +24,16 @@ export class WeatherToIconService {
       { weather: 'Tornado', icon: 'cyclone' },
       { weather: 'Clear', icon: 'sunny' },
       { weather: 'Clouds', icon: 'cloudy' },
+      { weather: 'Cloudy', icon: 'cloudy' },
       { weather: 'Overcast', icon: 'cloudy' },
       { weather: 'Partly cloudy', icon: 'partly_cloudy_day' },
       { weather: 'Haze', icon: 'sunny_snowing' },
+      { weather: 'Rain possible', icon: 'cloudy' },
     ];
   }
   public getIcon(weatherInput: string): string {
     var icon = 'sunny';
+    weatherInput = weatherInput.replace('Patchy', '');
     var inputArray = weatherInput.toLowerCase().split(',');
     var foundMatch = undefined;
     var counter = 0;
