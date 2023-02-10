@@ -1,3 +1,8 @@
+:host(.parent-container) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .main-weather {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -6,14 +11,17 @@
   width: 100%;
   grid-template-areas: "now today" "now tomorrow";
   grid-gap: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 .now {
   grid-area: now;
 }
-.w-d-main {
+.template-container {
   margin-top: 1rem;
+  margin-bottom: 3rem;
   width: 100%;
+  display: grid;
+  grid-template-rows: auto auto;
 }
 
 .loadingCard {
