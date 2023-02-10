@@ -1,9 +1,9 @@
-import { ErrorServerResponse } from './../models/weatherReport.model';
+import { ErrorServerResponse } from '../models/weatherReport.type';
 import { SnackbarcontrolService } from './snackbarcontrol.service';
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SuccessfulServerResponse } from '../models/weatherReport.model';
-import { Subscription, retry } from 'rxjs';
+import { SuccessfulServerResponse } from '../models/weatherReport.type';
+import { Subscription, retry, Subject, startWith, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,8 @@ import { Subscription, retry } from 'rxjs';
 export class WeatherService {
   public weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
 
-  public hasWeather = false;
+  public hasWeather = new Subject<boolean>();
+
   public loading = false;
   public isReadyForUpdate = false;
 
@@ -27,7 +28,7 @@ export class WeatherService {
     this.httpClient = httpClient;
   }
 
-  public getWeather(): SuccessfulServerResponse {
+  public getLastValidWeather(): SuccessfulServerResponse {
     return this.weatherData;
   }
 
@@ -73,13 +74,14 @@ export class WeatherService {
 
   private endWithError(message: string) {
     this.snackBar.openSnackBar(message, 'OK');
+    this.hasWeather.next(false);
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
     this.weatherSubscription.unsubscribe();
   }
 
   handleResponse(dataFromAPI: SuccessfulServerResponse) {
-    const dataFormatIsNotCorrect = this.checkDataHeaders(dataFromAPI);
+    const dataFormatIsNotCorrect = this.hasValidData(dataFromAPI);
     if (dataFormatIsNotCorrect) {
       this.weatherData = {} as SuccessfulServerResponse;
       return;
@@ -87,35 +89,30 @@ export class WeatherService {
     this.updateServiceWith(dataFromAPI);
   }
 
-  private checkDataHeaders(dataFromAPI: SuccessfulServerResponse) {
+  private hasValidData(dataFromAPI: SuccessfulServerResponse) {
     return dataFromAPI.weather == undefined || dataFromAPI.request == undefined;
   }
 
   private updateServiceWith(data: SuccessfulServerResponse) {
     this.weatherData = data;
-    this.checkForWeather();
+    this.hasWeather.next(true);
     this.setLoadStatus(false);
     this.isReadyForUpdate = true;
-  }
-
-  public checkForWeather() {
-    this.hasWeather = this.weatherData.nearest_area != undefined;
-  }
-  public getWeatherAvailable() {
-    return this.hasWeather;
   }
 
   public getUpdateStatus() {
     return this.isReadyForUpdate;
   }
-
+  public checkIfHasWeather() {
+    this.hasWeather.next(this.isReadyForUpdate);
+  }
+  
   private setLoadStatus(status: boolean) {
     this.loading = status;
   }
 
   clear() {
     this.weatherData = {} as SuccessfulServerResponse;
-    this.hasWeather = false;
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
     this.weatherSubscription.unsubscribe();
