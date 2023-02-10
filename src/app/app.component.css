@@ -1,26 +1,19 @@
-.main{
-    display: grid;
-    grid-template-columns: 1fr;
-    place-items: center;
-    width: 80vw;
-    margin-left: 10vw;
-    margin-top: 2rem;
+.main {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 2rem;
 }
-form{
-    width: 100%;
+.main > * {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
-
-searchbar{
-    display: flex;
-    width: 100%;
-    justify-content: center;
+form {
+  width: 100%;
 }
-
-app-weather-display{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-mat-toolbar{
-    background-color: var(--md-sys-color-on-primary);
+mat-toolbar {
+  background-color: var(--md-sys-color-on-primary);
 }
