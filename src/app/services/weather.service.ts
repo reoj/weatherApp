@@ -9,9 +9,9 @@ import { Subscription, retry, Subject, startWith, map } from 'rxjs';
   providedIn: 'root',
 })
 export class WeatherService {
-  public weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
+  private weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
 
-  public hasWeather = new Subject<boolean>();
+  public hasWeather = false;
 
   public loading = false;
   public isReadyForUpdate = false;
@@ -74,7 +74,7 @@ export class WeatherService {
 
   private endWithError(message: string) {
     this.snackBar.openSnackBar(message, 'OK');
-    this.hasWeather.next(false);
+    this.hasWeather = false;
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
     this.weatherSubscription.unsubscribe();
@@ -95,7 +95,7 @@ export class WeatherService {
 
   private updateServiceWith(data: SuccessfulServerResponse) {
     this.weatherData = data;
-    this.hasWeather.next(true);
+    this.hasWeather = true;
     this.setLoadStatus(false);
     this.isReadyForUpdate = true;
   }
@@ -104,9 +104,9 @@ export class WeatherService {
     return this.isReadyForUpdate;
   }
   public checkIfHasWeather() {
-    this.hasWeather.next(this.isReadyForUpdate);
+    this.hasWeather = this.isReadyForUpdate;
   }
-  
+
   private setLoadStatus(status: boolean) {
     this.loading = status;
   }

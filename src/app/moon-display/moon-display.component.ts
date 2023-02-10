@@ -7,41 +7,26 @@ import { Subscription } from 'rxjs';
   selector: 'app-moon-display',
   templateUrl: './moon-display.component.html',
   styleUrls: ['./moon-display.component.css'],
-  host:{
-    class: 'parent-container'
-  }
 })
 export class MoonDisplayComponent implements OnDestroy, OnInit {
   moonPhases = [] as Astronomy[];
 
-  private serviceHasData: Subscription;
-  public isDataReady = true;
-
-  constructor(public weatherService: WeatherService) {
-    this.weatherService = weatherService;
-
-    const observeWeatherService = {
-      next: (foundWeather: boolean) => {
-        this.isDataReady = foundWeather;
-        if (this.isDataReady) {
-          this.updateMoonDisplay();
-        }
-      },
-    };
-
-    this.serviceHasData = this.weatherService.hasWeather.subscribe(
-      observeWeatherService
-    );
-  }
-  ngOnDestroy(): void {
-    this.serviceHasData.unsubscribe();
+  public service: WeatherService;
+  
+  constructor(public WeatherService: WeatherService) {
+    this.service = WeatherService;
   }
   ngOnInit(): void {
-    this.weatherService.checkIfHasWeather();
+    if (this.service.hasWeather) {
+      this.updateMoonDisplay();
+    }
+  }
+  ngOnDestroy(): void {
+    this.service.checkIfHasWeather();
   }
 
   updateMoonDisplay() {
-    var fullData = this.weatherService.getLastValidWeather().weather;
+    var fullData = this.service.getLastValidWeather().weather;
     var newArrayOfMoonPhases = [] as Astronomy[];
     fullData.forEach((day) => {
       newArrayOfMoonPhases.push(day.astronomy[0]);

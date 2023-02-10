@@ -1,0 +1,19 @@
+<mat-card *ngIf="weatherService.loading; else displayData" class="loadingCard">
+  <mat-card-content>
+    <mat-spinner diameter="30" color="accent"></mat-spinner>
+    <h2>Loading...</h2>
+  </mat-card-content>
+</mat-card>
+<ng-template #displayData >
+  <div class="template-container" *ngIf="weatherService.hasWeather">
+    <router-outlet></router-outlet>
+    <mat-button-toggle-group >
+      <mat-button-toggle [routerLink]="['/weather']" color="primary">
+        Weather
+      </mat-button-toggle>
+      <mat-button-toggle [routerLink]="['/moon']" color="primary">
+        Sun & Moon Details
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</ng-template>

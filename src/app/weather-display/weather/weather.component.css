@@ -3,6 +3,11 @@
   justify-content: center;
   width: 100%;
 }
+.star-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .main-weather {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -16,33 +21,11 @@
 .now {
   grid-area: now;
 }
-.template-container {
-  margin-top: 1rem;
-  margin-bottom: 3rem;
-  width: 100%;
-  display: grid;
-  grid-template-rows: auto auto;
-}
-
-.loadingCard {
-  margin-top: 1rem;
-}
-.loadingCard > mat-card-content {
-  display: flex;
-  gap: 2rem;
-  grid-template-columns: 1fr min-content;
-}
-.loadingCard > mat-card-content > h2 {
-  color: var(--md-sys-color-on-background);
-}
 
 @media screen and (max-width: 1000px) {
   .main-weather {
     grid-template-columns: 1fr;
     grid-template-rows: min-content 1fr 1fr;
     grid-template-areas: "now" "today" "tomorrow";
-  }
-  .loadingCard > h2 {
-    display: none;
   }
 }

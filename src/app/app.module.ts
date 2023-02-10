@@ -1,4 +1,4 @@
-import { WeatherDisplayComponent } from './weather-display/weather-display.component';
+import { WeatherDisplayComponent } from './weather-display/display.component';
 import { WeatherDisplayModule } from './weather-display/weather-display.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -23,7 +23,6 @@ import { MoonDisplayComponent } from './moon-display/moon-display.component';
     FormsModule,
     HttpClientModule,
     WeatherDisplayModule,
-    AppRoutingModule,
     MaterialUiDependenciesModule,
   ],
   providers: [],

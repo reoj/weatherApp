@@ -1,7 +1,7 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { WeatherDisplayComponent } from './weather-display.component';
+import { WeatherDisplayComponent } from './display.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForecastCardComponent } from './forecast-card/forecast-card.component';
@@ -9,6 +9,8 @@ import { CurrentConditionCardComponent } from './current-condition-card/current-
 import { AppRoutingModule } from '../app-routing.module';
 import { TemperaturePipe } from '../pipes/temperature.pipe';
 import { TwentyFourHourPipe } from '../pipes/twentyfour-hours.pipe';
+import { WeatherComponent } from './weather/weather.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { TwentyFourHourPipe } from '../pipes/twentyfour-hours.pipe';
     ForecastCardComponent,
     CurrentConditionCardComponent,
     TemperaturePipe,
-    TwentyFourHourPipe
+    TwentyFourHourPipe,
+    WeatherComponent
   ],
   exports: [WeatherDisplayComponent],
   imports: [
@@ -25,6 +28,7 @@ import { TwentyFourHourPipe } from '../pipes/twentyfour-hours.pipe';
     MatButtonModule,
     AppRoutingModule,
     CommonModule,
+    MatButtonToggleModule
   ],
 })
 export class WeatherDisplayModule {}

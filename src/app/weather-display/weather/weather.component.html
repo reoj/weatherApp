@@ -1,0 +1,8 @@
+<div *ngIf="service.hasWeather" class="star-container">
+  <div class="main-weather">
+    <current-condition-card [weatherData]="service.getLastValidWeather()" class="now">
+    </current-condition-card>
+    <forecast-card title="Today" [forecast]="forecast[0]"></forecast-card>
+    <forecast-card title="Tomorrow" [forecast]="forecast[1]"></forecast-card>
+  </div>
+</div>
