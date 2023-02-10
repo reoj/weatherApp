@@ -1,7 +1,7 @@
+import { MatAutocomplete } from '@angular/material/autocomplete';
 import { SnackbarcontrolService } from './../services/snackbarcontrol.service';
-import { MatIconRegistry } from '@angular/material/icon';
 import { WeatherService } from '../services/weather.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AutocompleteService } from '../services/autocomplete.service';
 import { Observable, map, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -16,22 +16,23 @@ export class SearchbarComponent implements OnInit {
   listOfSuggestions = ['Queretaro, Queretaro'];
   filteredSuggestions: Observable<string[]>;
   searchBar = new FormControl('');
+  @ViewChild('auto') auto: MatAutocomplete = {} as MatAutocomplete;
 
   constructor(
     public WeatherService: WeatherService,
     public SnackbarService: SnackbarcontrolService,
-    public Autocomplete: AutocompleteService
+    public AutocompleteService: AutocompleteService
   ) {
     this.WeatherService = WeatherService;
     this.filteredSuggestions = new Observable<string[]>();
-    this.Autocomplete = Autocomplete;
+    this.AutocompleteService = AutocompleteService;
   }
 
   ngOnInit(): void {
-    this.listOfSuggestions = this.Autocomplete.citiesList;
+    this.listOfSuggestions = this.AutocompleteService.citiesList;
     this.filteredSuggestions = this.searchBar.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value || ''))
+      map((value) => this._filter(value || '')),
     );
   }
 
@@ -47,14 +48,13 @@ export class SearchbarComponent implements OnInit {
     this.city = this.searchBar.value || '';
 
     var errorMessage = this.checkCityValueForErrors();
-    var anErrorWasFound = errorMessage != ''
+    var anErrorWasFound = errorMessage != '';
 
     if (anErrorWasFound) {
       this.SnackbarService.openSnackBar(errorMessage, 'OK');
       return;
     }
-
-    var URIencodedCity = this.Autocomplete.prepareCityString(this.city);
+    var URIencodedCity = this.AutocompleteService.prepareCityString(this.city);
     this.WeatherService.fetchWeather(URIencodedCity);
   }
 
@@ -67,9 +67,5 @@ export class SearchbarComponent implements OnInit {
       errorMessage = 'Error: Please enter a city';
     }
     return errorMessage;
-  }
-
-  public setDisplayValue(recieved: string) {
-    this.searchBar.setValue(recieved);
   }
 }
