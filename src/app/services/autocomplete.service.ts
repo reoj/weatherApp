@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import cityNameList from '../models/cities.data';
+import cityNameList from '../models/cities.model';
 
 @Injectable({
   providedIn: 'root',
