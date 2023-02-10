@@ -1,7 +1,7 @@
-import { Hourly } from './../../models/weatherReport.model';
-import { ForecastCardUIModel, HourlyUIModel } from './../../models/ui.model';
+import { Hourly } from '../../models/weatherReport.type';
+import { ForecastCardUIModel, HourlyUIModel } from '../../models/ui.type';
 import { Component, Input, OnInit } from '@angular/core';
-import { Weather } from 'src/app/models/weatherReport.model';
+import { Weather } from 'src/app/models/weatherReport.type';
 import { WeatherToIconService } from 'src/app/services/weather-to-icon.service';
 
 @Component({
