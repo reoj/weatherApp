@@ -3,19 +3,19 @@
     <mat-card-title>
       <h2>{{ title }}</h2>
     </mat-card-title>
-    <mat-card-subtitle> {{ cardData.date | date }}</mat-card-subtitle>
+    <mat-card-subtitle [innerText]="cardData.date | date"></mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <div class="data-strip">
       <div>
         <span class="material-symbols-outlined"> arrow_upward </span>
-        <span class="temperature"> {{ cardData.maxTemp }} °C</span>
+        <span class="temperature" [innerText]="cardData.maxTemp | temperature"></span>
       </div>
 
       <div>
         <span class="material-symbols-outlined"> arrow_downward </span>
-        <span class="temperature"> {{ cardData.minTemp }} °C</span>
+        <span class="temperature" [innerText]="cardData.minTemp | temperature"></span>
       </div>
       <div>UV Index: {{ cardData.uvIndex }}</div>
     </div>
@@ -23,12 +23,11 @@
   <mat-card-footer>
     <div class="grid-container">
       <div *ngFor="let model of hourlyModels" class="hour-card">
-        <span class="material-symbols-outlined">
-          {{ model.icon }}
+        <span class="material-symbols-outlined" [innerText]="model.icon">
         </span>
-        <span class="hour-description"> {{ model.description }}</span>
-        <span>{{ model.temperature }} °C</span>
-        <span>{{ model.time }}:00 hrs</span>
+        <span class="hour-description" [innerText]="model.description"></span>
+        <span [innerText]="model.temperature | temperature"></span>
+        <span [innerText]="model.time | twentyfourHours"></span>
       </div>
     </div>
   </mat-card-footer>

@@ -2,15 +2,14 @@
     <mat-card-header>
       <h2>Current Weather</h2>
     </mat-card-header>
-    <span class="material-symbols-outlined bigSymbol">
-      {{ condition.icon }}
+    <span class="material-symbols-outlined bigSymbol" [innerText]="condition.icon">
     </span>
 
     <mat-card-content>
       <h1>{{ condition.city }}, {{ condition.country }}</h1>
       <h2>{{ condition.description }}</h2>
-      <h2>{{ condition.currentTemp }} °C</h2>
-      <p>Feels like: {{ condition.feelsLike }} °C</p>
+      <h2 [innerText]="condition.currentTemp | temperature"></h2>
+      <p>Feels like: {{ condition.feelsLike | temperature }}</p>
       <div class="shortData">
         <div>
           <span class="material-symbols-outlined">opacity</span>
