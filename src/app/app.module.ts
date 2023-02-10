@@ -1,47 +1,30 @@
-import { MatAutocomplete } from '@angular/material/autocomplete';
-import { MatCardModule } from '@angular/material/card';
+import { WeatherDisplayComponent } from './weather-display/weather-display.component';
 import { WeatherDisplayModule } from './weather-display/weather-display.module';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MaterialUiDependenciesModule } from './material-ui-dependencies/material-ui-dependencies.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { SearchbarComponent } from './searchbar/searchbar.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+import { MoonDisplayComponent } from './moon-display/moon-display.component';
 
 @NgModule({
-  declarations: [AppComponent, SearchbarComponent],
+  declarations: [AppComponent, SearchbarComponent, MoonDisplayComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,       
-    FormsModule,    
-    LayoutModule,
-    MatInputModule, 
-    MatAutocompleteModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,    
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatCardModule,
+    ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     WeatherDisplayModule,
+    AppRoutingModule,
+    MaterialUiDependenciesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
