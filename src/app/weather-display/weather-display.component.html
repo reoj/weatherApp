@@ -11,19 +11,14 @@
 <ng-template #weatherContainer>
   <div *ngIf="hasWeather" class="template-container">
     <div class="main-weather">
-      <current-condition-card
-        [weatherData]="weatherDataResponse"
-        class="now">
+      <current-condition-card [weatherData]="weatherDataResponse" class="now">
       </current-condition-card>
       <forecast-card title="Today" [forecast]="forecast[0]"></forecast-card>
       <forecast-card title="Tomorrow" [forecast]="forecast[1]"></forecast-card>
     </div>
 
-    <a [routerLink]="['/moon']" mat-raised-button color="primary">
-      Switch to Moon Phases 
-      <span class="">
-
-      </span>
-    </a>
+    <button [routerLink]="['/moon']" mat-raised-button color="primary">
+      View Sun & Moon Details
+    </button>
   </div>
 </ng-template>
