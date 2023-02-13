@@ -1,3 +1,5 @@
+import { Astronomy } from "./weatherReport.type";
+
 export class HourlyUIModel {
   time: string = '0';
   description: string = 'clear';
@@ -41,4 +43,9 @@ export class ForecastCardUIModel {
   uvIndex: string = '';
   maxTemp: string = '';
   minTemp: string = '';
+}
+
+export interface MoonPhaseUIModel {
+  data: Astronomy;
+  index: number;
 }
