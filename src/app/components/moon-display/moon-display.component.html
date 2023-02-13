@@ -2,18 +2,24 @@
   <div class="main-moon">
     <mat-card *ngFor="let phase of moonPhases">
       <mat-card-header>
-        <mat-card-title embolden [innerText]="dates[phase.index]"></mat-card-title>
+        <mat-card-title
+          embolden
+          [innerText]="dates[phase.index]"
+        ></mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <i [ngClass]="getMoonPhaseIcon(phase.data.moon_phase)"></i>
-        <p [innerText]="phase.data.moon_phase" style="margin-top: 1rem"></p>
+        <i
+          [ngClass]="getMoonPhaseIcon(phase.data.moon_phase)"
+          style="margin-bottom: 1rem"
+        ></i>
+        <p embolden [innerText]="phase.data.moon_phase"></p>
       </mat-card-content>
       <mat-card-footer>
         <p>Moon Illumination: {{ phase.data.moon_illumination }}%</p>
-        <p>Moonrise: {{phase.data.moonrise }}</p>
-        <p>Moonset: {{phase.data.moonset }}</p>
-        <p>Sunrise: {{phase.data.sunrise }}</p>
-        <p>Sunset: {{phase.data.sunset }}</p>
+        <p>Moonrise: {{ phase.data.moonrise }}</p>
+        <p>Moonset: {{ phase.data.moonset }}</p>
+        <p>Sunrise: {{ phase.data.sunrise }}</p>
+        <p>Sunset: {{ phase.data.sunset }}</p>
       </mat-card-footer>
     </mat-card>
   </div>

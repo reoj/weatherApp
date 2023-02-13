@@ -1,7 +1,7 @@
 <mat-card [ngClass]="title.toLowerCase()">
   <mat-card-header>
     <mat-card-title>
-      <h2>{{ title }}</h2>
+      <h2 embolden [innerText]="title"></h2>
     </mat-card-title>
     <mat-card-subtitle [innerText]="cardData.date | date"></mat-card-subtitle>
   </mat-card-header>

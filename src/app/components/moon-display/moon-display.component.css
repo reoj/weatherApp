@@ -24,6 +24,12 @@
   gap: 1rem;
   min-height: 50vh;
 }
+@media screen and (max-width: 1000px) {
+  .main-moon {
+    grid-template-columns: 1fr;
+  }
+}
+
 mat-card {
   color: white;
   display: grid;
@@ -36,7 +42,6 @@ mat-card > * {
   align-items: center;
   flex-direction: column;
 }
-
 
 .nf {
   font-family: "NerdFontsSymbols Nerd Font";

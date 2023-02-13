@@ -2,7 +2,6 @@ mat-card {
   color: white;
   height: 100%;
 }
-
 .today {
   background-color: var(--md-sys-color-secondary-container);
   grid-area: today;
@@ -11,7 +10,10 @@ mat-card {
   background-color: var(--md-sys-color-tertiary-container);
   grid-area: tomorrow;
 }
-mat-card-footer{
+mat-card-header {
+  font-family: 'New Rodin';
+}
+mat-card-footer {
   display: flex;
   margin: auto 0 3vh 0;
 }
@@ -41,7 +43,7 @@ mat-card-footer{
   margin-top: 1rem;
   gap: 1rem;
 }
-.data-strip > div{
+.data-strip > div {
   display: flex;
   flex-direction: row;
   align-items: center;

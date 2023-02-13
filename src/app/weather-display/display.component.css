@@ -1,3 +1,4 @@
+
 .template-container {
   margin-top: 1rem;
   margin-bottom: 3rem;
@@ -16,9 +17,10 @@
   grid-template-columns: 1fr min-content;
 }
 .loadingCard > mat-card-content > h2 {
+  font-family: "Ubuntu Complete";
   color: var(--md-sys-color-on-background);
 }
-mat-button-toggle-group{
+mat-button-toggle-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 80%;
