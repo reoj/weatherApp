@@ -13,7 +13,7 @@ import { TwentyFourHourPipe } from '../pipes/twentyfour-hours.pipe';
 import { WeatherComponent } from './weather/weather.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MoonDisplayComponent } from '../components/moon-display/moon-display.component';
-import { BoldWeightDirective } from '../directives/enbolden.directive';
+import { MakeBoldDirective } from '../directives/make-bold.directive';
 
 @NgModule({
   declarations: [
@@ -24,9 +24,9 @@ import { BoldWeightDirective } from '../directives/enbolden.directive';
     TwentyFourHourPipe,
     WeatherComponent,
     MoonDisplayComponent,
-    BoldWeightDirective,
+    MakeBoldDirective
   ],
-  exports: [WeatherDisplayComponent],
+  exports: [WeatherDisplayComponent, MoonDisplayComponent],
   imports: [
     MatCardModule,
     MatProgressSpinnerModule,
