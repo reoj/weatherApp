@@ -9,12 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialUiDependenciesModule } from './material-ui-dependencies/material-ui-dependencies.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SearchbarComponent } from './searchbar/searchbar.component';
-
-import { MoonDisplayComponent } from './moon-display/moon-display.component';
+import { SearchbarComponent } from './components/searchbar/searchbar.component';
 
 @NgModule({
-  declarations: [AppComponent, SearchbarComponent, MoonDisplayComponent],
+  declarations: [AppComponent, SearchbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

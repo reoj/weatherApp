@@ -1,4 +1,4 @@
-<form>
+<form (ngSubmit)="search()">
   <mat-form-field appearance="fill" color="accent">
     <mat-label>City</mat-label>
     <input
@@ -6,7 +6,6 @@
       matInput
       placeholder="Search for a city"
       name="txtCity"
-      (keyup.enter)="search()"
       [formControl]="searchBar"
       [matAutocomplete]="auto"
     />
@@ -19,7 +18,6 @@
       matSuffix
       mat-icon-button
       aria-label="Search"
-      (click)="search()"
       name="btnSearchCity"
     >
       <span class="material-symbols-outlined"> search </span>

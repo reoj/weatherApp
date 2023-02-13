@@ -1,0 +1,75 @@
+@font-face {
+  font-family: "NerdFontsSymbols Nerd Font";
+  src: url("https://www.nerdfonts.com/assets/fonts/Symbols-2048-em Nerd Font Complete.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+:host(.parent-container) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.template-container {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+}
+.main-moon {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+  min-height: 50vh;
+}
+mat-card {
+  color: white;
+  display: grid;
+  grid-template-rows: auto 10rem auto;
+  justify-content: center;
+}
+mat-card > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.nf {
+  font-family: "NerdFontsSymbols Nerd Font";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 5rem;
+}
+.nf-md-moon_first_quarter:before {
+  content: "\f0f61";
+}
+.nf-md-moon_full:before {
+  content: "\f0f62";
+}
+.nf-md-moon_last_quarter:before {
+  content: "\f0f63";
+}
+.nf-md-moon_new:before {
+  content: "\f0f64";
+}
+.nf-md-moon_waning_crescent:before {
+  content: "\f0f65";
+}
+.nf-md-moon_waning_gibbous:before {
+  content: "\f0f66";
+}
+.nf-md-moon_waxing_crescent:before {
+  content: "\f0f67";
+}
+.nf-md-moon_waxing_gibbous:before {
+  content: "\f0f68";
+}

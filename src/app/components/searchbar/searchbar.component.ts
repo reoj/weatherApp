@@ -1,10 +1,11 @@
 import { MatAutocomplete } from '@angular/material/autocomplete';
-import { SnackbarcontrolService } from './../services/snackbarcontrol.service';
-import { WeatherService } from '../services/weather.service';
+import { SnackbarcontrolService } from 'src/app/services/snackbarcontrol.service';
+import { WeatherService } from 'src/app/services/weather.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AutocompleteService } from '../services/autocomplete.service';
+import { AutocompleteService } from 'src/app/services/autocomplete.service';
 import { Observable, map, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'searchbar',
@@ -16,14 +17,14 @@ export class SearchbarComponent implements OnInit {
   listOfSuggestions = ['Queretaro, Queretaro'];
   filteredSuggestions: Observable<string[]>;
   searchBar = new FormControl('');
-  @ViewChild('auto') auto: MatAutocomplete = {} as MatAutocomplete;
+  @ViewChild('auto') autoCompleteControl: MatAutocomplete = {} as MatAutocomplete;
 
   constructor(
-    public WeatherService: WeatherService,
+    public weatherService: WeatherService,
     public SnackbarService: SnackbarcontrolService,
     public AutocompleteService: AutocompleteService
   ) {
-    this.WeatherService = WeatherService;
+    this.weatherService = weatherService;
     this.filteredSuggestions = new Observable<string[]>();
     this.AutocompleteService = AutocompleteService;
   }
@@ -44,7 +45,7 @@ export class SearchbarComponent implements OnInit {
   }
 
   public search(): void {
-    this.WeatherService.clear();
+    this.weatherService.clear();
     this.city = this.searchBar.value || '';
 
     var errorMessage = this.checkCityValueForErrors();
@@ -54,8 +55,9 @@ export class SearchbarComponent implements OnInit {
       this.SnackbarService.openSnackBar(errorMessage, 'OK');
       return;
     }
+    this.autoCompleteControl.showPanel = false;
     var URIencodedCity = this.AutocompleteService.prepareCityString(this.city);
-    this.WeatherService.fetchWeather(URIencodedCity);
+    this.weatherService.fetchWeather(URIencodedCity);
   }
 
   private checkCityValueForErrors() {
