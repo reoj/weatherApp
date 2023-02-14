@@ -12,6 +12,7 @@ export class WeatherToIconService {
       { weather: 'Rain', icon: 'rainy' },
       { weather: 'Light rain shower', icon: 'rainy' },
       { weather: 'Light rain', icon: 'grain' },
+      { weather: 'Light drizzle', icon: 'grain' },
       { weather: 'Light snow', icon: 'cloudy_snowing' },
       { weather: 'Heavy snow', icon: 'ac_unit' },
       { weather: 'Snow', icon: 'ac_unit' },
