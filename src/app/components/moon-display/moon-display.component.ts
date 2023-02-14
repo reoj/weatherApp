@@ -15,7 +15,8 @@ import { MoonToIconService } from 'src/app/services/moon-to-icon.service';
 export class MoonDisplayComponent implements OnDestroy, OnInit {
   moonPhases = [] as MoonPhaseUIModel[];
   public service: WeatherService;
-  public dates = [] as String[];
+  public dates = ['Today', 'Tomorrow', 'In 2 Days'];
+  public classes = ['today', 'tomorrow', 'indays'];
 
   constructor(
     public WeatherService: WeatherService,
@@ -24,7 +25,6 @@ export class MoonDisplayComponent implements OnDestroy, OnInit {
     this.service = WeatherService;
   }
   ngOnInit(): void {
-    this.setDates();
     if (this.service.hasWeather) {
       this.updateMoonDisplay();
     }
@@ -44,10 +44,6 @@ export class MoonDisplayComponent implements OnDestroy, OnInit {
     });
 
     this.moonPhases = newArrayOfMoonPhases;
-  }
-
-  setDates() {
-    this.dates = ['Today', 'Tomorrow', 'In 2 Days'];
   }
 
   getMoonPhaseIcon(phaseName: string) {

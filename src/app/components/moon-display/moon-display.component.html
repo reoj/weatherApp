@@ -1,6 +1,6 @@
 <div *ngIf="service.hasWeather" class="template-container">
   <div class="main-moon">
-    <mat-card *ngFor="let phase of moonPhases">
+    <mat-card *ngFor="let phase of moonPhases" [ngClass]="classes[phase.index].toLowerCase()">
       <mat-card-header>
         <mat-card-title
           embolden
