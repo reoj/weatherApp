@@ -36,11 +36,13 @@ export class WeatherToIconService {
     var icon = 'sunny';
     weatherInput = weatherInput.replace('Patchy', '');
     var inputArray = weatherInput.toLowerCase().split(',');
+
     var foundMatch = undefined;
     var counter = 0;
 
     while (foundMatch === undefined && counter < inputArray.length) {
       let currentSearch = inputArray[counter].trim();
+      
       foundMatch = this.matches.find((match) => {        
         return match.weather.toLowerCase() === currentSearch ? match : undefined;
       });

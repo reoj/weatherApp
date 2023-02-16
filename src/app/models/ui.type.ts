@@ -23,7 +23,7 @@ export class CurrentConditionUIModel {
   city = 'City';
   country = 'Country';
   station = 'Station';
-  description = 'Description';
+  description = 'Partly Cloudy';
   icon = 'partly_cloudy_day';
   currentTemp = '0';
   feelsLike = '0';
