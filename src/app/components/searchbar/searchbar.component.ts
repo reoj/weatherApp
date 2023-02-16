@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AutocompleteService } from 'src/app/services/autocomplete.service';
 import { Observable, map, startWith } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { VisibleError } from 'src/app/models/error.type';
 
 @Component({
   selector: 'searchbar',
@@ -52,7 +52,7 @@ export class SearchbarComponent implements OnInit {
     var anErrorWasFound = errorMessage != '';
 
     if (anErrorWasFound) {
-      this.SnackbarService.openSnackBar(errorMessage, 'OK');
+      this.SnackbarService.openSnackBar(new VisibleError(errorMessage, 'OK'));
       return;
     }
     this.autoCompleteControl.showPanel = false;
