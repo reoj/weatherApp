@@ -6,20 +6,26 @@
     <mat-card-subtitle [innerText]="cardData.date | date"></mat-card-subtitle>
   </mat-card-header>
 
-  <mat-card-content>
-    <div class="data-strip">
-      <div>
+  <mat-card-content style="padding-top: 2%;">
+    <div data-strip>
+      <div data-strip>
         <span class="material-symbols-outlined"> arrow_upward </span>
-        <span class="temperature" [innerText]="cardData.maxTemp | temperature"></span>
+        <span
+          class="temperature"
+          [innerText]="cardData.maxTemp | temperature"
+        ></span>
       </div>
-
-      <div>
+      <div data-strip>
         <span class="material-symbols-outlined"> arrow_downward </span>
-        <span class="temperature" [innerText]="cardData.minTemp | temperature"></span>
+        <span
+          class="temperature"
+          [innerText]="cardData.minTemp | temperature"
+        ></span>
       </div>
       <div>UV Index: {{ cardData.uvIndex }}</div>
     </div>
   </mat-card-content>
+
   <mat-card-footer>
     <div class="grid-container">
       <div *ngFor="let model of hourlyModels" class="hour-card">

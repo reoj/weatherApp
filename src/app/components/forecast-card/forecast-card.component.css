@@ -11,7 +11,7 @@ mat-card {
   grid-area: tomorrow;
 }
 mat-card-header {
-  font-family: 'New Rodin';
+  font-family: "New Rodin";
 }
 mat-card-footer {
   display: flex;
@@ -37,13 +37,8 @@ mat-card-footer {
   display: none;
   visibility: hidden;
 }
-.data-strip {
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-  gap: 1rem;
-}
-.data-strip > div {
+
+.strip-pair {
   display: flex;
   flex-direction: row;
   align-items: center;

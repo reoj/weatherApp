@@ -24,9 +24,6 @@ export class CurrentConditionCardComponent implements OnChanges {
   }
 
   private mapData(): void {
-    var descriptionForIcon = this.condition.description;
-    this.condition.icon = this.WTIService.getIcon(descriptionForIcon);
-
     var recievedArea = this.weatherData.nearest_area[0];
     this.mapAreaData(recievedArea);
 
@@ -35,6 +32,9 @@ export class CurrentConditionCardComponent implements OnChanges {
 
     var recievedWeather = this.weatherData.weather[0];
     this.mapWeatherData(recievedWeather);
+    
+    var descriptionForIcon = this.condition.description;
+    this.condition.icon = this.WTIService.getIcon(descriptionForIcon);
   }
 
   private mapAreaData(recievedArea: Area): void {

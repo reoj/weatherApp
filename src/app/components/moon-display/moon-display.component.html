@@ -1,25 +1,53 @@
 <div *ngIf="service.hasWeather" class="template-container">
   <div class="main-moon">
-    <mat-card *ngFor="let phase of moonPhases" [ngClass]="classes[phase.index].toLowerCase()">
+    <mat-card
+      *ngFor="let phase of moonPhases"
+      [ngClass]="classes[phase.index].toLowerCase()"
+    >
       <mat-card-header>
-        <mat-card-title
-          embolden
-          [innerText]="dates[phase.index]"
-        ></mat-card-title>
+        <mat-card-title>
+          <h1 embolden [innerText]="dates[phase.index]"></h1>
+        </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <i
           [ngClass]="getMoonPhaseIcon(phase.data.moon_phase)"
           style="margin-bottom: 1rem"
         ></i>
-        <p embolden [innerText]="phase.data.moon_phase"></p>
+        <h2 embolden [innerText]="phase.data.moon_phase"></h2>
       </mat-card-content>
       <mat-card-footer>
         <p>Moon Illumination: {{ phase.data.moon_illumination }}%</p>
-        <p>Moonrise: {{ phase.data.moonrise }}</p>
-        <p>Moonset: {{ phase.data.moonset }}</p>
-        <p>Sunrise: {{ phase.data.sunrise }}</p>
-        <p>Sunset: {{ phase.data.sunset }}</p>
+        <div class="rise-and-set-grid">
+          <div data-strip>
+            <span>
+              <span class="material-symbols-outlined">clear_night </span>
+              <span class="material-symbols-outlined">arrow_upward </span>
+            </span>
+            <span [innerText]="phase.data.moonrise"></span>
+          </div>
+          <div data-strip>
+            <span>
+              <span class="material-symbols-outlined">clear_night </span>
+              <span class="material-symbols-outlined">arrow_downward</span>
+            </span>
+            <span [innerText]="phase.data.moonset"></span>
+          </div>
+          <div data-strip>
+            <span>
+              <span class="material-symbols-outlined">brightness_5 </span>
+              <span class="material-symbols-outlined">arrow_upward </span>
+            </span>
+            <span [innerText]="phase.data.sunrise"></span>
+          </div>
+          <div data-strip>
+            <span>
+              <span class="material-symbols-outlined">brightness_5 </span>
+              <span class="material-symbols-outlined">arrow_downward</span>
+            </span>
+            <span [innerText]="phase.data.sunset"></span>
+          </div>
+        </div>
       </mat-card-footer>
     </mat-card>
   </div>

@@ -14,6 +14,7 @@ import { WeatherComponent } from './weather/weather.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MoonDisplayComponent } from '../components/moon-display/moon-display.component';
 import { MakeBoldDirective } from '../directives/make-bold.directive';
+import { DataStripDirective } from '../directives/data-strip.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MakeBoldDirective } from '../directives/make-bold.directive';
     TwentyFourHourPipe,
     WeatherComponent,
     MoonDisplayComponent,
-    MakeBoldDirective
+    MakeBoldDirective,
+    DataStripDirective
   ],
   exports: [WeatherDisplayComponent, MoonDisplayComponent],
   imports: [
