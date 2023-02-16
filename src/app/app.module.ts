@@ -10,6 +10,7 @@ import { MaterialUiDependenciesModule } from './material-ui-dependencies/materia
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AppComponent, SearchbarComponent],
@@ -22,6 +23,7 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
     HttpClientModule,
     WeatherDisplayModule,
     MaterialUiDependenciesModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [],
   bootstrap: [AppComponent],

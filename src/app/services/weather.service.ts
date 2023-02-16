@@ -3,13 +3,15 @@ import { SnackbarcontrolService } from './snackbarcontrol.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SuccessfulServerResponse } from '../models/weatherReport.type';
-import { Subscription, retry, Subject, startWith, map } from 'rxjs';
+import { Subscription, retry, Subject} from 'rxjs';
+import { VisibleError } from '../models/error.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WeatherService {
-  private weatherData: SuccessfulServerResponse = {} as SuccessfulServerResponse;
+  private weatherData: SuccessfulServerResponse =
+    {} as SuccessfulServerResponse;
 
   public hasWeather = false;
 
@@ -19,7 +21,7 @@ export class WeatherService {
   private baseURL = 'https://wttr.in/';
   private options = '?format=j1';
 
-  private weatherSubscription: Subscription = new Subscription();
+  private weatherSubject: Subject<Subscription> = new Subject<Subscription>();
 
   constructor(
     public httpClient: HttpClient,
@@ -47,12 +49,14 @@ export class WeatherService {
       },
     };
 
-    this.weatherSubscription = this.httpClient
+    this.weatherSubject = new Subject<Subscription>();
+    var subscriptionAPI = this.httpClient
       .get<SuccessfulServerResponse>(url)
-      .pipe(retry(3))
+      .pipe(retry({ count: 3, delay: 1000 }))
       .subscribe(APIResponseObserver);
+    this.weatherSubject.next(subscriptionAPI);
   }
-
+  
   private reloadService() {
     this.clear();
     this.setLoadStatus(true);
@@ -73,11 +77,12 @@ export class WeatherService {
   }
 
   private endWithError(message: string) {
-    this.snackBar.openSnackBar(message, 'OK');
+    var error = { message: message, action: 'OK' } as VisibleError;
+    this.snackBar.openSnackBar(error);
     this.hasWeather = false;
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
-    this.weatherSubscription.unsubscribe();
+    this.weatherSubject.unsubscribe();
   }
 
   handleResponse(dataFromAPI: SuccessfulServerResponse) {
@@ -115,6 +120,6 @@ export class WeatherService {
     this.weatherData = {} as SuccessfulServerResponse;
     this.setLoadStatus(false);
     this.isReadyForUpdate = false;
-    this.weatherSubscription.unsubscribe();
+    this.weatherSubject.unsubscribe();
   }
 }
