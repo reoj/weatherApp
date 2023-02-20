@@ -1,18 +1,23 @@
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatCardModule } from '@angular/material/card';
-import { WeatherDisplayComponent } from './display.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ForecastCardComponent } from '../components/forecast-card/forecast-card.component';
-import { CurrentConditionCardComponent } from '../components/current-condition-card/current-condition-card.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+import { ForecastCardComponent } from '../components/forecast-card/forecast-card.component';
+import { MoonDisplayComponent } from '../components/moon-display/moon-display.component';
+import { WeatherDisplayComponent } from './display.component';
+import { WeatherComponent } from './weather/weather.component';
+import { CurrentConditionCardComponent } from '../components/current-condition-card/current-condition-card.component';
+
 import { TemperaturePipe } from '../pipes/temperature.pipe';
 import { TwentyFourHourPipe } from '../pipes/twentyfour-hours.pipe';
-import { WeatherComponent } from './weather/weather.component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MoonDisplayComponent } from '../components/moon-display/moon-display.component';
+
 import { MakeBoldDirective } from '../directives/make-bold.directive';
 import { DataStripDirective } from '../directives/data-strip.directive';
 
@@ -33,10 +38,12 @@ import { DataStripDirective } from '../directives/data-strip.directive';
     MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,
     MatButtonToggleModule,
-    FormsModule
+    FormsModule,
+
   ],
 })
 export class WeatherDisplayModule {}

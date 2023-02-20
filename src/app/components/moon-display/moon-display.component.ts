@@ -3,6 +3,7 @@ import { Astronomy } from '../../models/weatherReport.type';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MoonPhaseUIModel } from 'src/app/models/ui.type';
 import { MoonToIconService } from 'src/app/services/moon-to-icon.service';
+import { FadeFromUnderAnimation } from 'src/app/weather-display/animations/fade.animation';
 
 @Component({
   selector: 'app-moon-display',
@@ -11,12 +12,16 @@ import { MoonToIconService } from 'src/app/services/moon-to-icon.service';
   host: {
     class: 'parent-container',
   },
+  animations: [
+    FadeFromUnderAnimation
+  ],
 })
 export class MoonDisplayComponent implements OnDestroy, OnInit {
   moonPhases = [] as MoonPhaseUIModel[];
   public service: WeatherService;
   public dates = ['Today', 'Tomorrow', 'In 2 Days'];
   public classes = ['today', 'tomorrow', 'indays'];
+  public animationState = 'void';
 
   constructor(
     public WeatherService: WeatherService,
@@ -28,9 +33,11 @@ export class MoonDisplayComponent implements OnDestroy, OnInit {
     if (this.service.hasWeather) {
       this.updateMoonDisplay();
     }
+    this.animationState = 'in';
   }
   ngOnDestroy(): void {
     this.service.checkIfHasWeather();
+    this.animationState = 'void';
   }
 
   updateMoonDisplay() {

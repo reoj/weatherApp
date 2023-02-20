@@ -7,18 +7,18 @@
 <ng-template #displayData>
   <div class="template-container" *ngIf="weatherService.hasWeather">
     <router-outlet></router-outlet>
-    <mat-button-toggle-group>
+    <mat-button-toggle-group [@fade]="animationState">
       <mat-button-toggle
         [routerLink]="['/weather']"
         color="primary"
-        [checked]="router.url === '/' || router.url === '/weather'"
+        [checked]="checkIsRouteWeather()"
       >
         Weather
       </mat-button-toggle>
       <mat-button-toggle
         [routerLink]="['/moon']"
         color="primary"
-        [checked]="router.url === '/moon'"
+        [checked]="checkIsRouteMoon()"
       >
         Sun & Moon Details
       </mat-button-toggle>
