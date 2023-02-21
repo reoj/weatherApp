@@ -1,11 +1,12 @@
 import { MatAutocomplete } from '@angular/material/autocomplete';
 import { SnackbarcontrolService } from 'src/app/services/snackbarcontrol.service';
 import { WeatherService } from 'src/app/services/weather.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AutocompleteService } from 'src/app/services/autocomplete.service';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith, Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { VisibleError } from 'src/app/models/error.type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'searchbar',
@@ -17,12 +18,14 @@ export class SearchbarComponent implements OnInit {
   listOfSuggestions = ['Queretaro, Queretaro'];
   filteredSuggestions: Observable<string[]>;
   searchBar = new FormControl('');
-  @ViewChild('auto') autoCompleteControl: MatAutocomplete = {} as MatAutocomplete;
+  @ViewChild('auto') autoCompleteControl: MatAutocomplete =
+    {} as MatAutocomplete;
 
   constructor(
     public weatherService: WeatherService,
     public SnackbarService: SnackbarcontrolService,
-    public AutocompleteService: AutocompleteService
+    public AutocompleteService: AutocompleteService,
+    private routerControl: Router
   ) {
     this.weatherService = weatherService;
     this.filteredSuggestions = new Observable<string[]>();
@@ -30,10 +33,11 @@ export class SearchbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.city = '';
     this.listOfSuggestions = this.AutocompleteService.citiesList;
     this.filteredSuggestions = this.searchBar.valueChanges.pipe(
       startWith(''),
-      map((value) => this._filter(value || '')),
+      map((value) => this._filter(value || ''))
     );
   }
 
@@ -58,6 +62,7 @@ export class SearchbarComponent implements OnInit {
     this.autoCompleteControl.showPanel = false;
     var URIencodedCity = this.AutocompleteService.prepareCityString(this.city);
     this.weatherService.fetchWeather(URIencodedCity);
+    this.recuperateIfRouteIsFallback();
   }
 
   private checkCityValueForErrors() {
@@ -70,4 +75,10 @@ export class SearchbarComponent implements OnInit {
     }
     return errorMessage;
   }
+  public recuperateIfRouteIsFallback() {
+    if (this.routerControl.url != '/main/weather' && this.routerControl.url != '/main/moon') {
+      this.routerControl.navigate(['/main/weather']);
+    }
+  }
+
 }
