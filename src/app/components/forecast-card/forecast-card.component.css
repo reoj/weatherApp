@@ -1,5 +1,5 @@
 mat-card {
-  color: white;
+  color: var(--md-sys-color-on-primary-light);
   height: 100%;
 }
 .today {
