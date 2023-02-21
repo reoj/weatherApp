@@ -1,28 +1,30 @@
-import { WeatherDisplayComponent } from './weather-display/display.component';
-import { WeatherDisplayModule } from './weather-display/weather-display.module';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialUiDependenciesModule } from './material-ui-dependencies/material-ui-dependencies.module';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { MaterialUiDependenciesModule } from './shared/material-ui-dependencies.module';
+import { WeatherDisplayModule } from './weather-display/weather-display.module';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
+
 import { StoreModule } from '@ngrx/store';
+import { FallbackComponent } from './components/fallback/fallback.component';
 
 @NgModule({
-  declarations: [AppComponent, SearchbarComponent],
+  declarations: [AppComponent, SearchbarComponent, FallbackComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    AppRoutingModule,    
     ReactiveFormsModule,
-    FormsModule,
     HttpClientModule,
     WeatherDisplayModule,
     MaterialUiDependenciesModule,
+    FormsModule,
     StoreModule.forRoot({}, {}),
   ],
   providers: [],
