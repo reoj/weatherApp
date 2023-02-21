@@ -3,7 +3,7 @@ import { Astronomy } from '../../models/weatherReport.type';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MoonPhaseUIModel } from 'src/app/models/ui.type';
 import { MoonToIconService } from 'src/app/services/moon-to-icon.service';
-import { FadeFromUnderAnimation } from 'src/app/weather-display/animations/fade.animation';
+import { FadeFromUnderAnimation } from 'src/app/animations/fade.animation';
 
 @Component({
   selector: 'app-moon-display',
