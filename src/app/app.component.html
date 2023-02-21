@@ -1,9 +1,9 @@
 <mat-card>
   <mat-toolbar>
-    <span>Deloitte Weather App</span>
+    <span class="link" [routerLink]="['/']">Deloitte Weather App</span>
   </mat-toolbar>
 </mat-card>
 <div class="main">
   <searchbar></searchbar>
-  <app-display></app-display>
+  <router-outlet></router-outlet>
 </div>

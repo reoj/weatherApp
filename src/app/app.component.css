@@ -11,6 +11,9 @@
   justify-content: center;
   width: 100%;
 }
+.link{
+  cursor: pointer;
+}
 form {
   width: 100%;
 }
