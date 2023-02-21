@@ -14,6 +14,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -28,8 +31,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatToolbarModule,
     MatCardModule,
     LayoutModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    CommonModule,
+    MatButtonToggleModule,
+    BrowserAnimationsModule,
   ],
   exports: [
+    CommonModule,
     MatInputModule,
     MatAutocompleteModule,
     MatFormFieldModule,
@@ -40,7 +49,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatToolbarModule,
     MatCardModule,
     LayoutModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    CommonModule,
+    MatButtonToggleModule,
+    BrowserAnimationsModule,
   ],
 })
 export class MaterialUiDependenciesModule {}
