@@ -9,14 +9,14 @@
     <router-outlet></router-outlet>
     <mat-button-toggle-group [@fade]="animationState">
       <mat-button-toggle
-        [routerLink]="['/weather']"
+        [routerLink]="['/main/weather']"
         color="primary"
         [checked]="checkIsRouteWeather()"
       >
         Weather
       </mat-button-toggle>
       <mat-button-toggle
-        [routerLink]="['/moon']"
+        [routerLink]="['/main/moon']"
         color="primary"
         [checked]="checkIsRouteMoon()"
       >

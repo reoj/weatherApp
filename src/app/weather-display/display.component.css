@@ -1,4 +1,9 @@
-
+:host(.parent-container) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
 .template-container {
   margin-top: 1rem;
   margin-bottom: 3rem;
