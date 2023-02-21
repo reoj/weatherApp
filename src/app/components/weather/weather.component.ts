@@ -1,5 +1,5 @@
-import { FadeFromUnderAnimation } from './../animations/fade.animation';
-import { WeatherService } from './../../services/weather.service';
+import { FadeFromUnderAnimation } from '../../animations/fade.animation';
+import { WeatherService } from '../../services/weather.service';
 import { Weather } from 'src/app/models/weatherReport.type';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
