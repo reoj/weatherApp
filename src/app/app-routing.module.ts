@@ -2,19 +2,25 @@ import { WeatherDisplayComponent } from './weather-display/display.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MoonDisplayComponent } from './components/moon-display/moon-display.component';
-import { WeatherComponent } from './weather-display/weather/weather.component';
+import { WeatherComponent } from './components/weather/weather.component';
+import { FallbackComponent } from './components/fallback/fallback.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/weather', pathMatch: 'full' },
-  { path: 'weather', component: WeatherComponent },
-  { path: 'moon', component: MoonDisplayComponent },
-  { path: '**', redirectTo: '/weather' },
+  {
+    path: 'main',
+    component: WeatherDisplayComponent,
+    children: [
+      { path: 'weather', component: WeatherComponent },
+      { path: 'moon', component: MoonDisplayComponent },
+    ],
+  },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: 'fallback' , component: FallbackComponent},
+  { path: '**', redirectTo: '/fallback' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-
-}
+export class AppRoutingModule {}

@@ -1,0 +1,46 @@
+mat-card {
+  color: var(--md-sys-color-on-primary-light);
+  height: min-content;
+  min-width: 80%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+mat-card-header {
+    height: auto;
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+mat-card-header > * {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+h1{
+    height: fit-content;
+    min-height: 10rem;
+    font-size: 10rem;
+    font-weight: bold;
+    margin: 0;
+}
+mat-card-content{
+    margin-bottom: auto;
+}
+mat-card-footer{
+    margin-bottom: 3rem;
+    font-size: medium;
+    font-style: italic;
+}
+:host(.parent-container) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
