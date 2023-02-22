@@ -15,7 +15,7 @@ mat-card-header {
 }
 mat-card-footer {
   display: flex;
-  margin: auto 0 3vh 0;
+  margin: auto 0 auto 0;
 }
 .grid-container {
   display: grid;
@@ -37,7 +37,9 @@ mat-card-footer {
   display: none;
   visibility: hidden;
 }
-
+.small-hour-icon{
+  font-size: 1.8vw;
+}
 .strip-pair {
   display: flex;
   flex-direction: row;
@@ -57,5 +59,11 @@ mat-card-footer {
   .hour-description {
     display: block;
     visibility: visible;
+  }
+  .small-hour-icon{
+    font-size: 1.2rem;
+  }
+  mat-card-footer{
+    margin-bottom: 1.5rem;
   }
 }

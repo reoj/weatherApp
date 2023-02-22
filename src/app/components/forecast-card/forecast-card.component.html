@@ -29,7 +29,7 @@
   <mat-card-footer>
     <div class="grid-container">
       <div *ngFor="let model of hourlyModels" class="hour-card">
-        <span class="material-symbols-outlined" [innerText]="model.icon">
+        <span class="material-symbols-outlined small-hour-icon" [innerText]="model.icon">
         </span>
         <span class="hour-description" [innerText]="model.description"></span>
         <span [innerText]="model.temperature | temperature"></span>

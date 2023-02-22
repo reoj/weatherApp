@@ -1,6 +1,6 @@
 mat-card {
   background-color: var(--md-sys-color-primary-container);
-  color: white;
+  color: var(--md-sys-color-on-primary-light);
   height: 100%;
 }
 mat-card-content > h1 {
@@ -9,7 +9,7 @@ mat-card-content > h1 {
 }
 
 .bigSymbol {
-  font-size: 3.5rem;
+  font-size: 5vw;
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -28,6 +28,9 @@ mat-card-content > h1 {
   align-items: center;
   gap: 0.5rem;
 }
+.small-hour-icon{
+  font-size: 1.8vw;
+}
 .stationFooter {
   display: flex;
   margin-top: auto;
@@ -37,5 +40,11 @@ mat-card-content > h1 {
 @media screen and (max-width: 1000px) {
   .stationFooter {
     margin-top: 3rem;
+  }
+  .bigSymbol {
+    font-size: 3.5rem;
+  }
+  .small-hour-icon{
+    font-size: 1.2rem;
   }
 }
