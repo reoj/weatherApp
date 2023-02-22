@@ -1,9 +1,9 @@
 import { ErrorServerResponse } from '../models/weatherReport.type';
 import { SnackbarcontrolService } from './snackbarcontrol.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { SuccessfulServerResponse } from '../models/weatherReport.type';
-import { Subscription, retry, Subject} from 'rxjs';
+import { Subscription, retry, Subject, tap, startWith } from 'rxjs';
 import { VisibleError } from '../models/error.type';
 
 @Injectable({
@@ -16,18 +16,23 @@ export class WeatherService {
   public hasWeather = false;
 
   public loading = false;
-  public isReadyForUpdate = false;
+  public isReadyForUpdate = new Subject<boolean>();
 
   private baseURL = 'https://wttr.in/';
-  private options = '?format=j1';
 
-  private weatherSubject: Subject<Subscription> = new Subject<Subscription>();
+  private weatherSubject: Subscription = new Subscription();
+
+  private DEBUG_MODE = true;
 
   constructor(
     public httpClient: HttpClient,
     public snackBar: SnackbarcontrolService
   ) {
     this.httpClient = httpClient;
+    if (this.DEBUG_MODE && localStorage.getItem('weatherData') != null) {
+      this.weatherData = JSON.parse(localStorage.getItem('weatherData') || '');
+      this.hasWeather = true;
+    }
   }
 
   public getLastValidWeather(): SuccessfulServerResponse {
@@ -49,14 +54,14 @@ export class WeatherService {
       },
     };
 
-    this.weatherSubject = new Subject<Subscription>();
-    var subscriptionAPI = this.httpClient
-      .get<SuccessfulServerResponse>(url)
+    this.weatherSubject = this.httpClient
+      .get<SuccessfulServerResponse>(url, {
+        params: new HttpParams().append('format', 'j1'),
+      })
       .pipe(retry({ count: 3, delay: 1000 }))
       .subscribe(APIResponseObserver);
-    this.weatherSubject.next(subscriptionAPI);
   }
-  
+
   private reloadService() {
     this.clear();
     this.setLoadStatus(true);
@@ -64,12 +69,15 @@ export class WeatherService {
 
   private buildCityURL(city: string) {
     var encodedCity = city.replaceAll(' ', '+');
-    var url = this.baseURL + `${encodedCity}` + this.options;
+    var url = this.baseURL + `${encodedCity}`;
     return url;
   }
 
   private generateRelevantMessage(exception: ErrorServerResponse): string {
     var message = 'Error fetching weather data:' + exception.message;
+    if (exception.status == null) {
+      message = 'Weather API is not responding';
+    }
     if (exception.status == 404) {
       message = 'City not found';
     }
@@ -81,12 +89,12 @@ export class WeatherService {
     this.snackBar.openSnackBar(error);
     this.hasWeather = false;
     this.setLoadStatus(false);
-    this.isReadyForUpdate = false;
+    this.isReadyForUpdate.next(false);
     this.weatherSubject.unsubscribe();
   }
 
   handleResponse(dataFromAPI: SuccessfulServerResponse) {
-    const dataFormatIsNotCorrect = this.hasValidData(dataFromAPI);
+    const dataFormatIsNotCorrect = this.hasInvalidData(dataFromAPI);
     if (dataFormatIsNotCorrect) {
       this.weatherData = {} as SuccessfulServerResponse;
       return;
@@ -94,7 +102,7 @@ export class WeatherService {
     this.updateServiceWith(dataFromAPI);
   }
 
-  private hasValidData(dataFromAPI: SuccessfulServerResponse) {
+  private hasInvalidData(dataFromAPI: SuccessfulServerResponse) {
     return dataFromAPI.weather == undefined || dataFromAPI.request == undefined;
   }
 
@@ -102,14 +110,17 @@ export class WeatherService {
     this.weatherData = data;
     this.hasWeather = true;
     this.setLoadStatus(false);
-    this.isReadyForUpdate = true;
+    this.isReadyForUpdate.next(true);
+    localStorage.setItem('weatherData', JSON.stringify(this.weatherData));
   }
 
   public getUpdateStatus() {
     return this.isReadyForUpdate;
   }
   public checkIfHasWeather() {
-    this.hasWeather = this.isReadyForUpdate;
+    this.isReadyForUpdate.subscribe((value) => {
+      this.hasWeather = value;
+    });
   }
 
   private setLoadStatus(status: boolean) {
@@ -119,7 +130,7 @@ export class WeatherService {
   clear() {
     this.weatherData = {} as SuccessfulServerResponse;
     this.setLoadStatus(false);
-    this.isReadyForUpdate = false;
+    this.isReadyForUpdate.next(false);
     this.weatherSubject.unsubscribe();
   }
 }
