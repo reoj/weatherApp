@@ -1,9 +1,7 @@
-import { iconNames } from '../models/mock-icons';
 import { Injectable } from '@angular/core';
+import { iconNames } from '../models/mock-icons';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class WeatherToIconService {
   matches: { weather: string; icon: string }[] = [];
   constructor() {

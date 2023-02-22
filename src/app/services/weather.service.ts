@@ -1,14 +1,12 @@
 import { ErrorServerResponse } from '../models/weatherReport.type';
 import { SnackbarcontrolService } from './snackbarcontrol.service';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SuccessfulServerResponse } from '../models/weatherReport.type';
-import { Subscription, retry, Subject, tap, startWith } from 'rxjs';
+import { Subscription, retry, Subject} from 'rxjs';
 import { VisibleError } from '../models/error.type';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class WeatherService {
   private weatherData: SuccessfulServerResponse =
     {} as SuccessfulServerResponse;
