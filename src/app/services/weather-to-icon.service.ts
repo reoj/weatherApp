@@ -1,3 +1,4 @@
+import { iconNames } from '../models/mock-icons';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -6,66 +7,75 @@ import { Injectable } from '@angular/core';
 export class WeatherToIconService {
   matches: { weather: string; icon: string }[] = [];
   constructor() {
-    this.matches = [
-      { weather: 'Thunderstorm', icon: 'thunderstorm' },
-      { weather: 'Drizzle', icon: 'grain' },
-      { weather: 'Rain', icon: 'rainy' },
-      { weather: 'Light rain shower', icon: 'rainy' },
-      { weather: 'Light rain', icon: 'grain' },
-      { weather: 'Light drizzle', icon: 'grain' },
-      { weather: 'Light snow', icon: 'cloudy_snowing' },
-      { weather: 'Heavy snow', icon: 'ac_unit' },
-      { weather: 'Snow', icon: 'ac_unit' },
-      { weather: 'Freezing fog', icon: 'ac_unit' },
-      { weather: 'Mist', icon: 'sunny_snowing' },
-      { weather: 'Smoke', icon: 'visibility_off' },
-      { weather: 'Fog', icon: 'foggy' },
-      { weather: 'Windy', icon: 'air' },
-      { weather: 'Squall', icon: 'storm' },
-      { weather: 'Tornado', icon: 'cyclone' },
-      { weather: 'Clear', icon: 'sunny' },
-      { weather: 'Clouds', icon: 'cloudy' },
-      { weather: 'Cloudy', icon: 'cloudy' },
-      { weather: 'Overcast', icon: 'cloudy' },
-      { weather: 'Partly cloudy', icon: 'partly_cloudy_day' },
-      { weather: 'Haze', icon: 'sunny_snowing' },
-      { weather: 'Rain possible', icon: 'cloudy' },
-    ];
+    this.matches = iconNames;
   }
+
   public getIcon(weatherInput: string): string {
-    var icon = 'sunny';
     weatherInput = weatherInput.replace('Patchy', '');
-    var inputArray = weatherInput.toLowerCase().split(',');
-
-    var foundMatch = undefined;
-    var counter = 0;
-
-    while (foundMatch === undefined && counter < inputArray.length) {
-      let currentSearch = inputArray[counter].trim();
-      
-      foundMatch = this.matches.find((match) => {        
-        return match.weather.toLowerCase() === currentSearch ? match : undefined;
-      });
-      counter++;
-    }
-    if (foundMatch !== undefined) {
-      icon = foundMatch.icon;
-    }
-    return icon;
+    var arrayOfPossibleNames = weatherInput.toLowerCase().split(',');
+    var finder = new IconMatchFinder(arrayOfPossibleNames);
+    return finder.findMatch();
   }
   public makeIconNight(icon: string): string {
-    if (icon === 'sunny') {
-      return 'nightlight';
-    } 
-    if (icon === 'clear') {
-      return 'clear_night';
+    switch (icon) {
+      case 'sunny':
+        return 'nightlight';
+      case 'clear':
+        return 'clear_night';
+      case 'partly_cloudy_day':
+        return 'nights_stay';
+      case 'sunny_snowing':
+        return 'snowing';
+      default:
+        return icon;
     }
-    if (icon === 'partly_cloudy_day') {
-      return 'nights_stay';
+  }
+}
+
+class IconMatchFinder {
+  private icon = 'sunny';
+  private matches = iconNames;
+  public foundMatch = undefined as
+    | { weather: string; icon: string }
+    | undefined;
+  public possibleMatches: string[];
+
+  constructor(possibleMatches: string[]) {
+    this.possibleMatches = possibleMatches;
+  }
+
+  public findMatch(): string {
+    var counter = 0;
+
+    while (
+      this.hasNotFoundAMatch() &&
+      this.hasNotCheckedAllPossibilities(counter)
+    ) {
+      var currentSearch = this.possibleMatches[counter].trim();
+      this.saveSearchResult(currentSearch);
+      counter++;
     }
-    if (icon === 'sunny_snowing') {
-      return 'snowing';
+    this.updateIcon();
+    return this.icon;
+  }
+
+  private updateIcon() {
+    if (this.foundMatch !== undefined) {
+      this.icon = this.foundMatch.icon;
     }
-    return icon;
+  }
+
+  private saveSearchResult(currentSearch: string) {
+    this.foundMatch = this.matches.find(
+      (iconMatch) => iconMatch.weather.toLowerCase() === currentSearch
+    );
+  }
+
+  private hasNotCheckedAllPossibilities(counter: number) {
+    return counter < this.possibleMatches.length;
+  }
+
+  private hasNotFoundAMatch() {
+    return this.foundMatch === undefined;
   }
 }
