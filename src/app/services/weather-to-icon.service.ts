@@ -44,7 +44,6 @@ class IconMatchFinder {
 
   public findMatch(): string {
     var counter = 0;
-
     while (
       this.hasNotFoundAMatch() &&
       this.hasNotCheckedAllPossibilities(counter)
