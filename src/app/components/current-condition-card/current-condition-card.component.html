@@ -2,7 +2,10 @@
   <mat-card-header>
     <h2 embolden>Current Weather</h2>
   </mat-card-header>
-  <span class="material-symbols-outlined bigSymbol" [innerText]="condition.icon"></span>
+  <span
+    class="material-symbols-outlined bigSymbol"
+    [innerText]="condition.icon"
+  ></span>
 
   <mat-card-content>
     <h1>{{ condition.city }}, {{ condition.country }}</h1>
@@ -11,21 +14,41 @@
     <p>Feels like: {{ condition.feelsLike | temperature }}</p>
     <div class="shortData">
       <div>
-        <span class="material-symbols-outlined small-hour-icon">opacity</span>
+        <span
+          class="material-symbols-outlined small-hour-icon"
+          matTooltip="Humidity"
+          [matTooltipPosition]="'above'"
+          >opacity</span
+        >
         {{ condition.humidity }} %
       </div>
 
       <div>
-        <span class="material-symbols-outlined small-hour-icon">air</span>
+        <span
+          class="material-symbols-outlined small-hour-icon"
+          matTooltip="Wind"
+          [matTooltipPosition]="'above'"
+          >air</span
+        >
         {{ condition.windSpeed }} km/h {{ condition.windDirection }}
       </div>
 
       <div>
-        <span class="material-symbols-outlined small-hour-icon">atm</span>
+        <span
+          class="material-symbols-outlined small-hour-icon"
+          matTooltip="Atmospheric Preassure"
+          [matTooltipPosition]="'above'"
+          >atm</span
+        >
         {{ condition.pressure }} hPa
       </div>
       <div>
-        <span class="material-symbols-outlined small-hour-icon">water</span>
+        <span
+          class="material-symbols-outlined small-hour-icon"
+          matTooltip="Precipitation"
+          [matTooltipPosition]="'above'"
+          >water</span
+        >
         {{ condition.precipitationLevel }} mm.
       </div>
     </div>

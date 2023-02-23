@@ -6,7 +6,7 @@
     <mat-card-subtitle [innerText]="cardData.date | date"></mat-card-subtitle>
   </mat-card-header>
 
-  <mat-card-content style="padding-top: 2%;">
+  <mat-card-content style="padding-top: 2%">
     <div data-strip>
       <div data-strip>
         <span class="material-symbols-outlined"> arrow_upward </span>
@@ -29,7 +29,12 @@
   <mat-card-footer>
     <div class="grid-container">
       <div *ngFor="let model of hourlyModels" class="hour-card">
-        <span class="material-symbols-outlined small-hour-icon" [innerText]="model.icon">
+        <span
+          class="material-symbols-outlined small-hour-icon"
+          [innerText]="model.icon"
+          [matTooltip]="model.description"
+          [matTooltipPosition]="'above'"
+        >
         </span>
         <span class="hour-description" [innerText]="model.description"></span>
         <span [innerText]="model.temperature | temperature"></span>
