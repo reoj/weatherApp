@@ -8,6 +8,7 @@ export const iconNames = [
     { weather: 'Light snow', icon: 'cloudy_snowing' },
     { weather: 'Heavy snow', icon: 'ac_unit' },
     { weather: 'Snow', icon: 'ac_unit' },
+    { weather: 'Moderate snow', icon: 'cloudy_snowing' },
     { weather: 'Freezing fog', icon: 'ac_unit' },
     { weather: 'Mist', icon: 'sunny_snowing' },
     { weather: 'Smoke', icon: 'visibility_off' },
