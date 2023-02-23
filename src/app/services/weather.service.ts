@@ -1,12 +1,13 @@
+import { GLOBAL_CONFIG } from './../config/map-custom-config';
 import { ErrorServerResponse } from '../models/weatherReport.type';
 import { SnackbarcontrolService } from './snackbarcontrol.service';
 import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SuccessfulServerResponse } from '../models/weatherReport.type';
-import { Subscription, retry, Subject} from 'rxjs';
+import { Subscription, retry, Subject } from 'rxjs';
 import { VisibleError } from '../models/error.type';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class WeatherService {
   private weatherData: SuccessfulServerResponse =
     {} as SuccessfulServerResponse;
@@ -16,11 +17,11 @@ export class WeatherService {
   public loading = false;
   public isReadyForUpdate = new Subject<boolean>();
 
-  private baseURL = 'https://wttr.in/';
+  private baseURL = GLOBAL_CONFIG.api;
 
   private weatherSubject: Subscription = new Subscription();
 
-  private DEBUG_MODE = true;
+  private DEBUG_MODE = GLOBAL_CONFIG.debug_mode;
 
   constructor(
     public httpClient: HttpClient,
@@ -54,7 +55,10 @@ export class WeatherService {
 
     this.weatherSubject = this.httpClient
       .get<SuccessfulServerResponse>(url, {
-        params: new HttpParams().append('format', 'j1'),
+        params: new HttpParams().append(
+          GLOBAL_CONFIG.format_param_key,
+          GLOBAL_CONFIG.format_param_value
+        ),
       })
       .pipe(retry({ count: 3, delay: 1000 }))
       .subscribe(APIResponseObserver);
