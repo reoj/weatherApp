@@ -1,4 +1,3 @@
-import { WeatherRouterModule } from './weather-display/weather-router.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -20,12 +19,12 @@ import { FallbackComponent } from './components/fallback/fallback.component';
   declarations: [AppComponent, SearchbarComponent, FallbackComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,    
-    ReactiveFormsModule,  
     HttpClientModule,
     MaterialUiDependenciesModule,
-    FormsModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,  
+    FormsModule,
+    AppRoutingModule,    
     StoreModule.forRoot({}, {}),
   ],
   providers: [],
